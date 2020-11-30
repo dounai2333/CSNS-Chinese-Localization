@@ -42,7 +42,7 @@ int main()
         exit(-1);
     }
 
-    // string, original content: na_en
+    // string, original content: na_en (it's protected so we can not scan it with "writable")
     DWORD langaddr = hw->GetImage() + 0x870DE8;
     // string, original content: /fixtrike/ (we have the + 1 so actually it's fixtrike/ )
     DWORD fixaddr = mem->Read<DWORD>(filesystem->GetImage() + 0xCC6E4) + 1;
