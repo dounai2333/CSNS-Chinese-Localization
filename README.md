@@ -2,7 +2,9 @@
 
 [English Readme](./README_EN.md)
 
-一个简易的本地化程序能让CSN:S读取中文. 平台C++.
+一个简易的本地化程序能让CSN:S读取中文.
+
+**本项目处于[MIT协议](./LICENSE_CN)下, 由C++编写.**
 
 ### 如何使用?
 1. 首先从反恐精英Online(国服)里提取出cstrike_chn.nar并复制
