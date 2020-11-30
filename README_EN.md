@@ -1,6 +1,6 @@
 ## CSN:S Chinese Localization
 
-[中文README](./README.md)
+[Chinese Readme | 中文说明文档](./README.md)
 
 A localization program that can let CSN:S load the Chinese. Written in C++.
 
