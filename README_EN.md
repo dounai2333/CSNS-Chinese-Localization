@@ -4,7 +4,7 @@
 
 A localization program that can let CSN:S load the Chinese.
 
-**This project in under [MIT license](./LICENSE) and written in C++.**
+**This project is current under [MIT license](./LICENSE) and written in C++.**
 
 ### How to use?
 1. You need a cstrike_chn.nar that from CSO China server and copy it
