@@ -18,6 +18,6 @@ Not now.
 
 ### Third party library
 
-**Thanks klorik for his KateBot's Memory and Misc module.**
+**Used KateBot's Memory and Misc code (Author klorik).**
 
-**Thanks Bunsei for his MemoryScan program.**
+**Used MemoryScan program (Author Bunsei).**

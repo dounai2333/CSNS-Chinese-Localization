@@ -18,6 +18,6 @@
 
 ### 第三方库
 
-**感谢 klorik 提供了 KateBot 的 Memory 和 Misc 代码模块.**
+**使用了 KateBot 的 Memory 和 Misc 源代码 (作者 klorik).**
 
-**感谢 Bunsei 提供了 MemoryScan 程序.**
+**使用了 MemoryScan 程序 (作者 Bunsei).**
