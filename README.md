@@ -1,6 +1,6 @@
 ## CSN:S 中文本地化支持
 
-[英文README](./README_EN.md)
+[English Readme](./README_EN.md)
 
 一个简易的本地化程序能让CSN:S读取中文. 平台C++.
 
