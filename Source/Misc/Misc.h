@@ -32,11 +32,12 @@ public:
 	void CloseConsoleQuickEdit();
 	void SetConsoleColor( concol textColor, concol bgColor );
 	void ConsoleClear();
-	int  GetKey();
+	int  ReadKey();
 	void SetConsoleSize( int w, int h );
 	void SetConsoleEncoding(UINT code);
 	double GetWindowsMajorVersion();
 	double GetWindowsMinorVersion();
+	bool FileExist(std::string file);
 	std::string DecimalToHex(int input, bool withhexmark = false);
 	int HexToDecimal(std::string input);
 	std::string ToUpper(std::string text);

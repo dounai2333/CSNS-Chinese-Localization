@@ -28,5 +28,25 @@
     <Filter Include="Misc">
       <UniqueIdentifier>{89091e1c-c0ee-453c-95bb-34f3eee661ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Memory Scan">
+      <UniqueIdentifier>{155ef404-7960-4763-ab22-1efe3e4d5de7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Memory Scan\clrcompression.dll">
+      <Filter>Memory Scan</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Memory Scan\clrjit.dll">
+      <Filter>Memory Scan</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Memory Scan\coreclr.dll">
+      <Filter>Memory Scan</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Memory Scan\MemScan.exe">
+      <Filter>Memory Scan</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Memory Scan\mscordaccore.dll">
+      <Filter>Memory Scan</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

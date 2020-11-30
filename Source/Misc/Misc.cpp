@@ -51,7 +51,7 @@ void MiscFunc::ConsoleClear()
 	*/
 }
 
-int MiscFunc::GetKey()
+int MiscFunc::ReadKey()
 {
 	HANDLE hConsole;
 	INPUT_RECORD inrec;
@@ -120,6 +120,12 @@ double MiscFunc::GetWindowsMinorVersion()
 		ret = (double)osInfo.dwMinorVersion;
 	}
 	return ret;
+}
+
+bool MiscFunc::FileExist(std::string file)
+{
+	struct stat buffer;
+	return (stat(file.c_str(), &buffer) == 0);
 }
 
 std::string MiscFunc::DecimalToHex(int input, bool withhexmark)

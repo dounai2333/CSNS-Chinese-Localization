@@ -29,6 +29,23 @@
     <ClInclude Include="Memory\module.h" />
     <ClInclude Include="Misc\Misc.h" />
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Memory Scan\clrcompression.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Memory Scan\clrjit.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Memory Scan\coreclr.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Memory Scan\MemScan.exe">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Memory Scan\mscordaccore.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{A37F4D8F-5379-482F-B8EE-D6546FFE2C1B}</ProjectGuid>
