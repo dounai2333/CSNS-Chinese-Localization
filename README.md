@@ -1,5 +1,8 @@
 ## Counter-Strike Online (Nexon: Studio / Zombie) Chinese Localization
 
+[![](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
+[![](https://img.shields.io/badge/version-1.1-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.1)
+
 [Chinese Readme | 中文说明文档](./README_CN.md)
 
 A localization program that can let CSN:S load the Chinese.
