@@ -108,23 +108,23 @@ int main()
 
             if (filename == "/cstrike_chn/resource/bad_words.csv")
             {
-                cout << "将bad_words.csv重定向至游戏原始内容...\n"; // 脏话屏蔽列表
-                mem->Write(resourceaddr + i * 0x40, "/cstrike_na_en/resource/bad_words.csv");
+                cout << "屏蔽国服的 bad_words.csv ...\n"; // 脏话屏蔽列表
+                mem->Write(resourceaddr + i * 0x40, "null");
             }
             if (filename == "/cstrike_chn/resource/chat_filter_list.csv")
             {
-                cout << "将chat_filter_list.csv重定向...\n"; // 早期的脏话屏蔽列表
-                mem->Write(resourceaddr + i * 0x40, "/cstrike_na_en/resource/chat_filter_list.csv");
+                cout << "屏蔽国服的 chat_filter_list.csv ...\n"; // 早期的脏话屏蔽列表
+                mem->Write(resourceaddr + i * 0x40, "null");
             }
             if (filename == "/cstrike_chn/resource/item.csv")
             {
-                cout << "将item.csv重定向至游戏原始内容...\n"; // 游戏里各种道具的定义
-                mem->Write(resourceaddr + i * 0x40, "/cstrike_na_en/resource/item.csv");
+                cout << "屏蔽国服的 item.csv ...\n"; // 游戏里各种道具的定义
+                mem->Write(resourceaddr + i * 0x40, "null");
             }
             if (filename == "/cstrike_chn/resource/relation_product_ver2.csv")
             {
-                cout << "将relation_product_ver2.csv重定向...\n"; // 商城道具的定义
-                mem->Write(resourceaddr + i * 0x40, "/cstrike_na_en/resource/relation_product_ver2.csv");
+                cout << "屏蔽国服的 relation_product_ver2.csv ...\n"; // 商城道具的定义
+                mem->Write(resourceaddr + i * 0x40, "null");
             }
         }
     }
