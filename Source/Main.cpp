@@ -50,7 +50,7 @@ int main()
     string langtext = mem->Read<t>(langaddr).text;
     string fixtext = mem->Read<t>(fixaddr).text;
 
-    if (fixtext == "cstrike_chn/" || langtext == "chn")
+    if (fixtext == "cstrike_chn/" && langtext == "chn")
     {
         system("cls");
         cout << "请勿重复操作!待游戏加载完毕后即可加载汉化\n";
@@ -71,16 +71,10 @@ int main()
 
     cout << "\n已冻结游戏进程,正在进行操作...\n\n";
     
-    // content: cstrike_chn/ (with 00 ends)
-    char cstrike_chn[13] = { 0x63, 0x73, 0x74, 0x72, 0x69, 0x6B, 0x65, 0x5F, 0x63, 0x68, 0x6E, 0x2F, 0x00 };
-    for (int i = 0; i < 13; i++)
-        mem->Write<byte>(fixaddr + i, cstrike_chn[i]);
+    mem->Write(fixaddr, "cstrike_chn/");
     cout << "国服nar重定向已完成\n";
 
-    // content: chn (with 00 ends)
-    char chn[4] = { 0x63, 0x68, 0x6E, 0x00 };
-    for (int i=0;i<4;i++)
-        mem->WriteProtected<byte>(langaddr + i, chn[i]);
+    mem->WriteProtected(langaddr, "chn");
     cout << "选择中国语已完成\n\n";
 
     DWORD resourceaddr = NULL;
@@ -92,8 +86,10 @@ int main()
         if (!Misc->FileExist(filelist[i]))
         {
             mem_file_check_passed = false;
-            //cout << "缺少关键文件" << filelist[i] << "!\n";
-            (mem_file_missing_list.length() == 0) ? mem_file_missing_list += filelist[i] : mem_file_missing_list += ", " + filelist[i];
+            if (mem_file_missing_list.length() == 0)
+                mem_file_missing_list += filelist[i];
+            else
+                mem_file_missing_list += ", " + filelist[i];
         }
     }
 
@@ -135,12 +131,6 @@ int main()
 
     if (resourceaddr != NULL)
     {
-        // content: /cstrike_na_en/resource/bad_words.csv (with 00 ends)
-        char bad_words[38] = { 0x2F, 0x63, 0x73, 0x74, 0x72, 0x69, 0x6B, 0x65, 0x5F, 0x6E, 0x61, 0x5F, 0x65, 0x6E, 0x2F, 0x72, 0x65, 0x73, 0x6F, 0x75, 0x72, 0x63, 0x65, 0x2F, 0x62, 0x61, 0x64, 0x5F, 0x77, 0x6F, 0x72, 0x64, 0x73, 0x2E, 0x63, 0x73, 0x76, 0x00 };
-        // content: /cstrike_na_en/resource/chat_filter_list.csv (with 00 ends)
-        char chat_filter_list[45] = { 0x2F, 0x63, 0x73, 0x74, 0x72, 0x69, 0x6B, 0x65, 0x5F, 0x6E, 0x61, 0x5F, 0x65, 0x6E, 0x2F, 0x72, 0x65, 0x73, 0x6F, 0x75, 0x72, 0x63, 0x65, 0x2F, 0x63, 0x68, 0x61, 0x74, 0x5F, 0x66, 0x69, 0x6C, 0x74, 0x65, 0x72, 0x5F, 0x6C, 0x69, 0x73, 0x74, 0x2E, 0x63, 0x73, 0x76, 0x00 };
-        // content: /cstrike_na_en/resource/item.csv (with 00 ends)
-        char item[34] = { 0x2F, 0x63, 0x73, 0x74, 0x72, 0x69, 0x6B, 0x65, 0x5F, 0x6E, 0x61, 0x5F, 0x65, 0x6E, 0x2F, 0x72, 0x65, 0x73, 0x6F, 0x75, 0x72, 0x63, 0x65, 0x2F, 0x69, 0x74, 0x65, 0x6D, 0x2E, 0x63, 0x73, 0x76 };
         for (int i = 0; i < 2048; i++)
         {
             string filename = mem->Read<t>(resourceaddr + i * 0x40).text;
@@ -150,20 +140,17 @@ int main()
             if (filename == "/cstrike_chn/resource/bad_words.csv")
             {
                 cout << "将bad_words.csv重定向至游戏原始内容...\n";
-                for (int j = 0; j < 38; j++)
-                    mem->Write<byte>(resourceaddr + i * 0x40 + j, bad_words[j]);
+                mem->Write(resourceaddr + i * 0x40, "/cstrike_na_en/resource/bad_words.csv");
             }
             if (filename == "/cstrike_chn/resource/chat_filter_list.csv")
             {
                 cout << "将chat_filter_list.csv重定向...\n"; // 太长了要换行破坏美观
-                for (int j = 0; j < 45; j++)
-                    mem->Write<byte>(resourceaddr + i * 0x40 + j, chat_filter_list[j]);
+                mem->Write(resourceaddr + i * 0x40, "/cstrike_na_en/resource/chat_filter_list.csv");
             }
             if (filename == "/cstrike_chn/resource/item.csv")
             {
                 cout << "将item.csv重定向至游戏原始内容...\n";
-                for (int j = 0; j < 34; j++)
-                    mem->Write<byte>(resourceaddr + i * 0x40 + j, item[j]);
+                mem->Write(resourceaddr + i * 0x40, "/cstrike_na_en/resource/item.csv");
             }
         }
     }
