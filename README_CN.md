@@ -1,7 +1,7 @@
 ## Counter-Strike Nexon: Studio / Zombie 中文本地化支持
 
-[![](https://img.shields.io/badge/license-MIT-green)](./LICENSE_CN)
-[![](https://img.shields.io/badge/version-1.1-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.1)
+[![](https://img.shields.io/badge/许可证-MIT-green)](./LICENSE_CN)
+[![](https://img.shields.io/badge/发行版本-1.1-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.1)
 
 [English Readme](./README.md)
 
