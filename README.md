@@ -1,25 +1,25 @@
-## Counter-Strike Nexon: Studio / Zombie 中文本地化支持
+## Counter-Strike Online (Nexon: Studio / Zombie) Chinese Localization
 
-[English Readme](./README_EN.md)
+[Chinese Readme | 中文说明文档](./README_CN.md)
 
-一个简易的本地化程序能让CSN:S读取中文.
+A localization program that can let CSN:S load the Chinese.
 
-**本项目当前处于[MIT协议](./LICENSE_CN)下, 由C++编写.**
+**This project is current under [MIT license](./LICENSE) and written in C++.**
 
-### 如何使用?
-1. 首先从反恐精英Online(国服)里提取出cstrike_chn.nar并复制
-2. 粘贴到CSN:S的Data文件夹内
-3. 将其改名为fixtrike.nar
-4. 当右下角加载N社反作弊(蓝框 NEXON SECURITY)时开启程序
-5. 完事! 享受吧!
+### How to use?
+1. You need a cstrike_chn.nar that from CSO China server and copy it
+2. Paste it to CSN:S Data folder
+3. Rename it to fixtrike.nar
+4. Start the program when Nexon Security is loading
+5. We are done! Enjoy it!
 
-### 什么时候支持自动更新(签名扫描)?
-不是现在.
+### Auto update when (signature scan)?
+Not now.
 
 ‮
 
-### 第三方库
+### Third party library
 
-**使用了 KateBot 的 Memory 和 Misc 源代码 (作者 klorik).**
+**Used KateBot's Memory and Misc code (Author klorik).**
 
-**使用了 MemoryScan 程序 (作者 Bunsei).**
+**Used MemoryScan program (Author Bunsei).**
