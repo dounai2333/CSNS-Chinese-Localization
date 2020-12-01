@@ -4,7 +4,7 @@
 
 A localization program that can let CSN:S load the Chinese.
 
-**This project is current under [MIT license](./LICENSE) and written in C++.**
+**This project is current under [MIT license](./LICENSE) and written in C++, build with VS2019.**
 
 ### How to use?
 1. Get a cstrike_chn.nar from CSO China client
@@ -13,15 +13,19 @@ A localization program that can let CSN:S load the Chinese.
 4. Start the program when Nexon Security is loading
 5. We are done! Enjoy it!
 
-### Auto update when (signature scan)?
-Not now.
-
 ### Will I be banned for using this on Steam server?
 Will, most likely **YES**.
 
 Thats because this program is working like other normal cheating software (memory reading / writing)
 
 USE AT YOUR OWN RISK!
+
+### Is this program will stop working after game updates?
+I'm not sure, I have do it as much as possible to compatible with game update (signature scan).
+
+But still, you can always download the source code, update the address and build for yourself!
+
+‮
 
 ‮
 
