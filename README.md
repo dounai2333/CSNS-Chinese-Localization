@@ -27,6 +27,6 @@ USE AT YOUR OWN RISK!
 
 ### Third party library
 
-**Used KateBot's Memory and Misc code (Author klorik).**
+- **Used KateBot's Memory and Misc code (Author klorik).**
 
-**Used MemoryScan program (Author Bunsei).**
+- **Used MemoryScan program (Author Bunsei).**

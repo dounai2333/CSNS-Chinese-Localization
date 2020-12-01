@@ -27,6 +27,6 @@
 
 ### 第三方库
 
-**使用了 KateBot 的 Memory 和 Misc 源代码 (作者 klorik).**
+- **使用了 KateBot 的 Memory 和 Misc 源代码 (作者 klorik).**
 
-**使用了 MemoryScan 程序 (作者 Bunsei).**
+- **使用了 MemoryScan 程序 (作者 Bunsei).**
