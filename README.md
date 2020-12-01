@@ -17,14 +17,11 @@ A localization program that can let CSN:S load the Chinese.
 Not now.
 
 ### Will I be banned for using this on Steam server?
-Will, most likely **YES**.
-
-Thats because this program is working like other normal cheating software (memory reading / writing)
-
-USE AT YOUR OWN RISK!
+- Will, most likely **YES**.
+- Thats because this program is working like other normal cheating software (memory reading / writing)
+- USE AT YOUR OWN RISK!
 
 ‮
-
 
 ### Third party library
 
