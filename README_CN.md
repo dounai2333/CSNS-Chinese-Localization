@@ -2,7 +2,6 @@
 
 [![](https://img.shields.io/badge/许可证-MIT-green)](./LICENSE_CN)
 [![](https://img.shields.io/badge/发行版本-1.1-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.1)
-
 [English Readme](./README.md)
 
 一个简易的本地化程序能让CSN:S读取中文.
