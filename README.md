@@ -12,8 +12,10 @@ A localization program that can let CSN:S load the Chinese.
 1. Get a cstrike_chn.nar from CSO China client
 2. Copy it and Paste to CSN:S Data folder
 3. Rename it to fixtrike.nar
-4. Start the program when Nexon Security is loading
+4. Start the program when Nexon Anti-Cheat* is loading
 5. We are done! Enjoy it!
+
+*Nexon Anti-Cheat: In the lower right of your screen with blue background, showing white text NEXON GAME SECURITY
 
 ### Will I be banned for using this on Steam server?
 Will, most likely **YES**.
