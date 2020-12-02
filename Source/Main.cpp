@@ -100,33 +100,52 @@ int main()
 
     if (resourceaddr != NULL)
     {
+        int muted = 0;
         for (int i = 0; i < 2048; i++)
         {
             string filename = mem->Read<t>(resourceaddr + i * 0x40).text;
             if (filename.find("/cstrike_chn") == -1)
                 break;
 
-            if (filename == "/cstrike_chn/resource/bad_words.csv")
+            /* // if you are interested about the file list, use these code.
+            string com = "echo " << filename << ">>filelist.txt";
+            system(com.c_str());
+            */
+
+            if (filename == "/cstrike_chn/resource/bad_words.csv"               /*脏话屏蔽列表*/ ||
+                filename == "/cstrike_chn/resource/chat_filter_list.csv"        /*早期的脏话屏蔽列表*/ ||
+                filename == "/cstrike_chn/resource/item.csv"                    /*游戏里各种道具的定义*/ ||
+                filename == "/cstrike_chn/resource/relation_product_ver2.csv"   /*商城道具的定义*/ ||
+                filename == "/cstrike_chn/sound/training/cstrain11.wav"         /*教程关的语音提示*/ ||
+                filename == "/cstrike_chn/sound/training/cstrain1.wav"          /*(我要听小姐姐!!国服两声提示音爬爬爬)*/ ||
+                filename == "/cstrike_chn/sound/training/cstrain10.wav"         ||
+                filename == "/cstrike_chn/sound/training/cstrain12.wav"         ||
+                filename == "/cstrike_chn/sound/training/cstrain12a.wav"        ||
+                filename == "/cstrike_chn/sound/training/cstrain13.wav"         ||
+                filename == "/cstrike_chn/sound/training/cstrain15.wav"         ||
+                filename == "/cstrike_chn/sound/training/cstrain16.wav"         ||
+                filename == "/cstrike_chn/sound/training/cstrain17.wav"         ||
+                filename == "/cstrike_chn/sound/training/cstrain18.wav"         ||
+                filename == "/cstrike_chn/sound/training/cstrain19.wav"         ||
+                filename == "/cstrike_chn/sound/training/cstrain2.wav"          ||
+                filename == "/cstrike_chn/sound/training/cstrain2a.wav"         ||
+                filename == "/cstrike_chn/sound/training/cstrain3.wav"          ||
+                filename == "/cstrike_chn/sound/training/cstrain3a.wav"         ||
+                filename == "/cstrike_chn/sound/training/cstrain4.wav"          ||
+                filename == "/cstrike_chn/sound/training/cstrain5.wav"          ||
+                filename == "/cstrike_chn/sound/training/cstrain6.wav"          ||
+                filename == "/cstrike_chn/sound/training/cstrain7.wav"          ||
+                filename == "/cstrike_chn/sound/training/cstrain7a.wav"         ||
+                filename == "/cstrike_chn/sound/training/cstrain8.wav"          ||
+                filename == "/cstrike_chn/sound/training/cstrain9.wav"          ||
+                filename == "/cstrike_chn/sound/training/cstrain9a.wav"         ||
+                false /* change the list here! */)
             {
-                cout << "屏蔽国服的 bad_words.csv ...\n"; // 脏话屏蔽列表
-                mem->Write(resourceaddr + i * 0x40, "null");
-            }
-            if (filename == "/cstrike_chn/resource/chat_filter_list.csv")
-            {
-                cout << "屏蔽国服的 chat_filter_list.csv ...\n"; // 早期的脏话屏蔽列表
-                mem->Write(resourceaddr + i * 0x40, "null");
-            }
-            if (filename == "/cstrike_chn/resource/item.csv")
-            {
-                cout << "屏蔽国服的 item.csv ...\n"; // 游戏里各种道具的定义
-                mem->Write(resourceaddr + i * 0x40, "null");
-            }
-            if (filename == "/cstrike_chn/resource/relation_product_ver2.csv")
-            {
-                cout << "屏蔽国服的 relation_product_ver2.csv ...\n"; // 商城道具的定义
+                muted++;
                 mem->Write(resourceaddr + i * 0x40, "null");
             }
         }
+        cout << "内存扫描成功,已执行完毕!\n一共屏蔽不应该被加载的 " << muted << " 个文件.\n";
     }
 
     cout << "\n操作执行完毕,已加载汉化! :)\n按下任意键退出汉化程序解冻游戏进程!\nMade by dounai2333 (QQ1328600509)\n";
