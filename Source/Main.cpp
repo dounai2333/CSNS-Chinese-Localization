@@ -4,7 +4,7 @@ int main()
 {
     SetConsoleTitle("CSN:S汉化程序");
     Misc->CloseConsoleQuickEdit();
-    Misc->SetConsoleSize(370, 385);
+    Misc->SetConsoleSize(370, 350);
     Misc->SetConsoleCursor(false);
     //Misc->SetConsoleEncoding(CP_UTF8);
 
@@ -22,7 +22,7 @@ int main()
              <<"- 不保证游戏数次更新后仍可用\n\n"
              <<"- 如提示\"error TS6,1 (GetLastError 0x20)\"\n"
              <<"-- 无视并点击确定即可，提示2次后正常游戏\n\n"
-             <<"Made by dounai2333 (QQ1328600509)\n\n";
+             <<"Made by dounai2333 (QQ1328600509)\n\n\n";
         system("pause");
         exit(1);
     }
