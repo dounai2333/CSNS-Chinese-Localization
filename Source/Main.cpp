@@ -109,6 +109,8 @@ int main()
                 break;
 
             /* // if you are interested about the file list, use these code.
+            // if you want to mute something that isn't in this list,
+            // then go find the address by yourself!
             string com = "echo " << filename << ">>filelist.txt";
             system(com.c_str());
             */
