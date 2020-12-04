@@ -84,6 +84,7 @@ int main()
     if (memfile_missing_list == "")
     {
         // hex content: /cstrike_chn/resource/background/800_2_c_advice.tga (with extra 00 security verification hex to prevent error result)
+        // thanks Bunsei for his MemoryScan program make this fast as possible without wasting time to scan the memory
         DWORD exitcode = RunMemScanAndGetExitCode("-pid=" + to_string(mem->m_dwProcessId) + " -T=\"h\" -value=\"2F 63 73 74 72 69 6B 65 5F 63 68 6E 2F 72 65 73 6F 75 72 63 65 2F 62 61 63 6B 67 72 6F 75 6E 64 2F 38 30 30 5F 32 5F 63 5F 61 64 76 69 63 65 2E 74 67 61 00 33 00 00 00 33\"");
 
         if ((string)mem->Read<t>(exitcode).text == "/cstrike_chn/resource/background/800_2_c_advice.tga")
@@ -175,7 +176,6 @@ string CheckMemFile()
 
 DWORD RunMemScanAndGetExitCode(string args)
 {
-    // thanks Bunsei for his Memory Scan program
     LPSTR start_str = strdup(string("MemScan.exe " + args).c_str());
     STARTUPINFO si;
     PROCESS_INFORMATION pi;
