@@ -51,7 +51,7 @@ static auto find_ptr = [](Module* mod, const char* sig, DWORD sig_add = NULL, DW
     return (!off ? 0 : off + off_add - sb);
 };
 
-struct t
+struct str
 {
     char text[128];
 };

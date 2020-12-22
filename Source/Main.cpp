@@ -27,7 +27,8 @@ int main()
         exit(1);
     }
 
-    cout << "cstrike-online.exe (PID: "<< mem->m_dwProcessId << ") attached.\nAttach handle: "<< (int)mem->m_hProcess <<"("<< Misc->DecimalToHex((int)mem->m_hProcess, true) <<")\n\n";
+    cout << "cstrike-online.exe (PID: "<< mem->m_dwProcessId << ") attached."
+         <<"Attach handle: "<< (int)mem->m_hProcess <<"("<< Misc->DecimalToHex((int)mem->m_hProcess, true) <<")\n\n";
 
     // if user start program too early, we will hit exception in here.
     Module* hw = mem->GetModule("hw.dll");
@@ -43,24 +44,24 @@ int main()
         exit(-1);
     }
 
+    // string, original content: /fixtrike/
+// if filesysyem_nar.dll get any update then we need to check this
+    DWORD fixtrike_addr = mem->Read<DWORD>(filesystem->GetImage() + 0xCC6E4);
     // string, original content: na_en (it's protected so we can not scan it with "writable")
     // this signature is little dangers, may it will not working anymore if has any update
-    DWORD langaddr = hw->GetImage() + find_ptr(hw, "C7 00 ? ? ? ? C7 40 04 ? ? ? ? E8 ? ? ? ? 83 C4 10 6A 00 56 57 83 EC 08 8B C4", 0x2, 0x3C);
-    // string, original content: /fixtrike/
-    // if filesysyem_nar.dll get any update then we need to check this
-    DWORD fixaddr = mem->Read<DWORD>(filesystem->GetImage() + 0xCC6E4);
+    DWORD lang_addr = hw->GetImage() + find_ptr(hw, "C7 00 ? ? ? ? C7 40 04 ? ? ? ? E8 ? ? ? ? 83 C4 10 6A 00 56 57 83 EC 08 8B C4", 0x2, 0x3C);
 
-    string langtext = mem->Read<t>(langaddr).text;
-    string fixtext = mem->Read<t>(fixaddr).text;
+    string fixtrike_addr_text = mem->Read<str>(fixtrike_addr).text;
+    string lang_addr_text = mem->Read<str>(lang_addr).text;
 
-    if (fixtext == "/cstrike_chn/" && langtext == "chn")
+    if (fixtrike_addr_text == "/cstrike_chn/" && lang_addr_text == "chn")
     {
         system("cls");
         cout << "请勿重复操作!待游戏加载完毕后即可加载汉化\n";
         system("pause");
         exit(0);
     }
-    else if (fixtext != "/fixtrike/" || langtext != "na_en")
+    else if (fixtrike_addr_text != "/fixtrike/" || lang_addr_text != "na_en")
     {
         system("cls");
         cout << "检测到非法内容,可能由于游戏更新基址已过期\n";
@@ -73,10 +74,10 @@ int main()
     DebugSetProcessKillOnExit(false);
     cout << "\n已冻结游戏进程,正在进行操作...\n\n";
     
-    mem->Write(fixaddr, "/cstrike_chn/");
+    mem->Write(fixtrike_addr, "/cstrike_chn/");
     cout << "国服nar重定向已完成\n";
 
-    mem->WriteProtected(langaddr, "chn");
+    mem->WriteProtected(lang_addr, "chn");
     cout << "选择中国语已完成\n\n";
 
     DWORD resourceaddr = NULL;
@@ -87,10 +88,10 @@ int main()
         // thanks Bunsei for his MemoryScan program make this fast as possible without wasting time to scan the memory
         DWORD exitcode = RunMemScanAndGetExitCode("-pid=" + to_string(mem->m_dwProcessId) + " -T=\"h\" -value=\"2F 63 73 74 72 69 6B 65 5F 63 68 6E 2F 72 65 73 6F 75 72 63 65 2F 62 61 63 6B 67 72 6F 75 6E 64 2F 38 30 30 5F 32 5F 63 5F 61 64 76 69 63 65 2E 74 67 61 00 33 00 00 00 33\"");
 
-        if ((string)mem->Read<t>(exitcode).text == "/cstrike_chn/resource/background/800_2_c_advice.tga")
+        if ((string)mem->Read<str>(exitcode).text == "/cstrike_chn/resource/background/800_2_c_advice.tga")
             resourceaddr = exitcode;
         else if (exitcode == 2)
-            cout << "内存扫描失败!请检查fixtrike.nar!\n其应被放置在Data目录内且不得改名!\n";
+            cout << "内存扫描失败!请检查fixtrike.nar!\n其应被放置在Data目录内且不得改名!\n\n如果您正在尝试让本程序读取其他nar,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
         else
             cout << "内存扫描出现意外错误!\n返回数值:" << exitcode << "(" << Misc->DecimalToHex(exitcode, true) << ")\n";
     }
@@ -104,7 +105,7 @@ int main()
         int muted = 0;
         for (int i = 0; i < 2048; i++)
         {
-            string filename = mem->Read<t>(resourceaddr + i * 0x40).text;
+            string filename = mem->Read<str>(resourceaddr + i * 0x40).text;
             if (filename.find("/cstrike_chn") == -1)
                 break;
 
