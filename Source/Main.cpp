@@ -27,7 +27,7 @@ int main()
         exit(1);
     }
 
-    cout << "cstrike-online.exe (PID: "<< mem->m_dwProcessId << ") attached."
+    cout <<"cstrike-online.exe (PID: "<< mem->m_dwProcessId << ") attached."
          <<"Attach handle: "<< (int)mem->m_hProcess <<"("<< Misc->DecimalToHex((int)mem->m_hProcess, true) <<")\n\n";
 
     // if user start program too early, we will hit exception in here.
@@ -91,7 +91,7 @@ int main()
         if ((string)mem->Read<str>(exitcode).text == "/cstrike_chn/resource/background/800_2_c_advice.tga")
             resourceaddr = exitcode;
         else if (exitcode == 2)
-            cout << "内存扫描失败!请检查fixtrike.nar!\n其应被放置在Data目录内且不得改名!\n\n如果您正在尝试让本程序读取其他nar,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
+            cout << "内存扫描失败!请检查fixtrike.nar!\n其应被放置在Data目录内且不得改名!\n\n如果您正在尝试让本程序读取非chn的nar文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
         else
             cout << "内存扫描出现意外错误!\n返回数值:" << exitcode << "(" << Misc->DecimalToHex(exitcode, true) << ")\n";
     }
