@@ -45,7 +45,7 @@ int main()
     }
 
     // string, original content: /fixtrike/
-// if filesysyem_nar.dll get any update then we need to check this
+    // if filesysyem_nar.dll get any update then we need to check this
     DWORD fixtrike_addr = mem->Read<DWORD>(filesystem->GetImage() + 0xCC6E4);
     // string, original content: na_en (it's protected so we can not scan it with "writable")
     // this signature is little dangers, may it will not working anymore if has any update
