@@ -40,7 +40,10 @@ using std::cout;
 using std::string;
 
 string CheckMemFile();
-DWORD RunMemScanAndGetExitCode(string args);
+// Type: i8 ui8 i16 i32 i64 ui16 ui32 ui64 fs fd s h c b
+// most type in non-tested (because I don't need it), so take care!
+DWORD RunMemScanAndGetExitCode(DWORD ProcessID, string Type, string Value, string Encoding = "utf-8");
+void RunMemScanAndGetAllAddress(DWORD ProcessID, string Type, string Value, DWORD (&output)[128], string Encoding = "utf-8");
 
 static auto find_ptr = [](Module* mod, const char* sig, DWORD sig_add = NULL, DWORD off_add = NULL, bool sub_base = true, bool doubleread = true) -> DWORD
 {
@@ -54,4 +57,9 @@ static auto find_ptr = [](Module* mod, const char* sig, DWORD sig_add = NULL, DW
 struct str
 {
     char text[128];
+};
+
+struct bigstr
+{
+    wchar_t text[128];
 };
