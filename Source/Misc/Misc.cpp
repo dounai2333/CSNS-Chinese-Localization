@@ -146,13 +146,13 @@ int MiscFunc::HexToDecimal(std::string input)
 	return result;
 }
 
-std::string MiscFunc::ToUpper(std::string text)
+std::string MiscFunc::ToUpper(std::string& text)
 {
 	std::transform(text.begin(), text.end(), text.begin(), ::toupper);
 	return text;
 }
 
-std::string MiscFunc::ToLower(std::string text)
+std::string MiscFunc::ToLower(std::string& text)
 {
 	std::transform(text.begin(), text.end(), text.begin(), ::tolower);
 	return text;
