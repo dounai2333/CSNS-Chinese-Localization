@@ -219,11 +219,6 @@ void PackerMuteMultiFile(DWORD address, string file, DWORD index)
     DWORD addr = address - index * mem->Read<byte>(address - 3);
     for (int i = 0; i < 0xFF; i++)
     {
-        if (mem->Read<byte>(address - 3) != i) // the file list ended, so we don't need to continue
-        {
-            
-            break;
-        }
         wstring tempws(mem->Read<bigstr>(addr + index * i).text);
         // not safe, will lost data if any word is a non-ascii character
         // find a better way to do this!
