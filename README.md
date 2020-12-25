@@ -1,4 +1,4 @@
-## Counter-Strike Online (Nexon: Studio / Zombie) Chinese Localization
+## Counter-Strike Online (Nexon: Studio / Zombies) Chinese Localization
 
 [![](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
 [![](https://img.shields.io/badge/Release%20Version-1.1-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.1)
@@ -8,11 +8,7 @@ A localization program that can let CSN:S load the Chinese.
 
 **This project is current under [MIT license](./LICENSE) and written in C++, build with VS2019.**
 
-‮
-
-- **Still trying to fully support Packer(pak) file**
-
-- **Program is working now, but prepare for random bugs and crashes!**
+- Secondary development and issue / pull request are always welcome!
 
 ### How to use?
 1. Make sure your game language is English
@@ -39,6 +35,13 @@ USE AT YOUR OWN RISK!
 I'm not sure, I have do it as much as possible to compatible with game update (signature scan).
 
 But still, you can always download the source code, update the address and build for yourself!
+
+### My game has problem with this program! help!
+Start a [new issue thread here](https://github.com/dounai2333/CSNS-Chinese-Localization/issues/new).
+
+**Please give as much detail as possible!**
+
+**The more detail you gave, the more possibility helps!**
 
 ‮
 

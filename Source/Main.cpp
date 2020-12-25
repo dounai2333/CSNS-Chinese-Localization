@@ -162,12 +162,8 @@ int main()
             mem->Write(cstrike_na_en_packer_addr, "/lstrike/locale_chn/");
             cout << "国服pak重定向已完成\n";
 
+            // maybe somedays Item.csv will be rename to item.csv
             DWORD item = RunMemScanAndGetExitCode(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/item.csv", "utf-16");
-            /* // backup code if Item.csv has been renamed to item.csv
-            DWORD addresses[CHAR_MAX];
-            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/item.csv", addresses, "utf-16");
-            DWORD item = addresses[0];
-            */
             if (item != 2)
             {
                 PackerMuteMultiFile(item, "lstrike/locale_chn/resource/item.csv", 0x58);
