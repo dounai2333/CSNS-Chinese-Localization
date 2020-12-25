@@ -8,12 +8,23 @@
 
 **本项目当前处于[MIT协议](./LICENSE_CN)下, 由C++编写, 编译平台VS2019.**
 
+‮
+
+- **仍在尝试为Packer(pak)文件做完整支持**
+
+- **目前已可使用，但会有概率出现BUG和闪退现象！**
+
 ### 如何使用?
-1. 从反恐精英Online(国服)里提取出cstrike_chn.nar
-2. 复制,并将其粘贴到CSN:S的Data文件夹内
-3. 将其改名为fixtrike.nar
-4. 当右下角加载N社反作弊*时开启程序
-5. 完事! 享受吧!
+1. 保证你的游戏语言为英语 (English, na_en)
+2. 从反恐精英Online(国服)里提取出cstrike_chn.nar
+3. 复制,并将其粘贴到CSN:S的Data文件夹内
+4. 将其改名为fixtrike.nar
+5. 从反恐精英Online(国服)里提取出chn_00000.pak*
+6. 复制,并将其粘贴到CSN:S的Data\Packer文件夹内
+7. 当右下角加载N社反作弊*时开启程序
+8. 完事! 享受吧!
+
+chn_00000.pak: 别疑惑了，你也需要其他同名文件 (chn_00001.pak, 00002等...)
 
 *N社反作弊: 长方形的蓝框,中间显示白字NEXON GAME SECURITY
 

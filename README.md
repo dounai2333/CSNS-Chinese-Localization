@@ -8,12 +8,23 @@ A localization program that can let CSN:S load the Chinese.
 
 **This project is current under [MIT license](./LICENSE) and written in C++, build with VS2019.**
 
+‮
+
+- **Still trying to fully support Packer(pak) file**
+
+- **Program is working now, but prepare for random bugs and crashes!**
+
 ### How to use?
-1. Get cstrike_chn.nar from CSO China client
-2. Copy it and paste to CSN:S Data folder
-3. Rename it to fixtrike.nar
-4. Start the program when Nexon Anti-Cheat* is loading
-5. We are done! Enjoy it!
+1. Make sure your game language is English
+2. Get cstrike_chn.nar from CSO China client
+3. Copy it and paste to CSN:S Data folder
+4. Rename it to fixtrike.nar
+5. Get chn_00000.pak* from CSO China client
+6. Copy it and paste to CSN:S Data\Packer folder
+7. Start the program when Nexon Anti-Cheat* is loading
+8. We are done! Enjoy it!
+
+*chn_00000.pak: Don't doubt, you also need other files as this (chn_00001.pak, 00002 etc..)
 
 *Nexon Anti-Cheat: In the lower right of your screen with blue background, showing white text NEXON GAME SECURITY
 

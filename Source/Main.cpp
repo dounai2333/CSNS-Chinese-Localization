@@ -48,6 +48,7 @@ int main()
     // string, original content: /cstrike_na_en/
     // if filesysyem_nar.dll get any update then we need to check this
     // address - 0x30 = /fixtrike/
+    // note: don't remove + 0x30 or any file in nar will override same file come from pak
     DWORD cstrike_na_en_addr = mem->Read<DWORD>(filesystem->GetImage() + 0xCC6E4) + 0x30;
     // string, original content: na_en (it's protected so we can not scan it with "writable")
     // this signature is little dangers, may it will not working anymore if has any update
@@ -164,7 +165,7 @@ int main()
 
             DWORD item = RunMemScanAndGetExitCode(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/item.csv", "utf-16");
             /* // backup code if Item.csv has been renamed to item.csv
-            DWORD addresses[128];
+            DWORD addresses[CHAR_MAX];
             RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/item.csv", addresses, "utf-16");
             DWORD item = addresses[0];
             */
@@ -177,7 +178,8 @@ int main()
                 for (int i = 0; i < 0xFF; i++)
                 {
                     wstring temp1(mem->Read<bigstr>(item + 0x58 * i).text);
-                    // not safe, will lost data if any word is a non-ascii character, find a better way to do this!
+                    // not safe, will lost data if any word is a non-ascii character
+                    // find a better way to do this!
                     string filename(temp1.begin(), temp1.end());
                     if (filename.find("lstrike") == -1)
                         continue; // we don't break because some info is encrypted and it will cause problem
@@ -194,7 +196,6 @@ int main()
                 // todo: add bad_words.csv, chat_filter_list.csv and relation_product_ver2.csv to mute list.
             }
         }
-        
         cout << "已屏蔽不应该被加载的 " << muted << " 个文件.\n";
     }
     cout << "\n操作执行完毕,已加载汉化! :)\n按下任意键退出汉化程序解冻游戏进程!\nMade by dounai2333 (QQ1328600509)\n";
@@ -246,7 +247,7 @@ DWORD RunMemScanAndGetExitCode(DWORD ProcessID, string Type, string Value, strin
     return NULL;
 }
 
-void RunMemScanAndGetAllAddress(DWORD ProcessID, string Type, string Value, DWORD(&output)[128], string Encoding)
+void RunMemScanAndGetAllAddress(DWORD ProcessID, string Type, string Value, DWORD(&output)[CHAR_MAX], string Encoding)
 {
     string strtemp = "MemScan.exe -pid=" + to_string(ProcessID) + " -t=" + Type + " -value=\"" + Value + "\" " + ((Type == "s") ? ("-encoding=" + Encoding) : "") + " >%temp%\\address.log";
     system(strtemp.c_str());
