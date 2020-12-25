@@ -30,7 +30,6 @@ int main()
     cout <<"cstrike-online.exe (PID: "<< mem->m_dwProcessId << ") attached.\n"
          <<"Attach handle: "<< (int)mem->m_hProcess <<"("<< Misc->DecimalToHex((int)mem->m_hProcess, true) <<")\n\n";
 
-
     // if user start program too early, we will hit exception in here.
     Module* hw = mem->GetModule("hw.dll");
     Module* filesystem = mem->GetModule("filesystem_nar.dll");
@@ -171,29 +170,38 @@ int main()
             */
             if (item != 2)
             {
-                mem->Write(item, L"null");
+                PackerMuteMultiFile(item, "lstrike/locale_chn/resource/item.csv", 0x58);
+                muted++;
+            }
+            
+            // 别骂了别骂了 我知道代码不好看重复性还高 但是不这样写不行
+            // C++的[]被方法转成*会丢失数据 某文件的index还不一样 我太南了1551
+            DWORD addresses[CHAR_MAX];
+            for (int i = 0; i < CHAR_MAX; i++)
+                addresses[i] = NULL;
+            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/bad_words.csv", addresses, "utf-16");
+            if (addresses[1] != NULL) // 0 will cause crash
+            {
+                PackerMuteMultiFile(addresses[1], "lstrike/locale_chn/resource/bad_words.csv", 0x68);
                 muted++;
 
-                item = item - 0x58 * mem->Read<byte>(item - 3);
-                for (int i = 0; i < 0xFF; i++)
-                {
-                    wstring temp1(mem->Read<bigstr>(item + 0x58 * i).text);
-                    // not safe, will lost data if any word is a non-ascii character
-                    // find a better way to do this!
-                    string filename(temp1.begin(), temp1.end());
-                    if (filename.find("lstrike") == -1)
-                        continue; // we don't break because some info is encrypted and it will cause problem
-                    filename.replace(filename.begin(), filename.begin() + filename.find("/", 9) + 1, "");
-                    
-                    if (filename == "resource/item.csv")
-                    {
-                        mem->Write(item + 0x58 * i, L"null");
-                        muted++;
-                        break; // do not mute other string, can cause crash
-                    }
-                }
+                for (int i = 0; i < CHAR_MAX; i++)
+                    addresses[i] = NULL;
+            }
+            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/chat_filter_list.csv", addresses, "utf-16");
+            if (addresses[1] != NULL) // 0 will cause crash
+            {
+                PackerMuteMultiFile(addresses[1], "lstrike/locale_chn/resource/chat_filter_list.csv", 0x78);
+                muted++;
 
-                // todo: add bad_words.csv, chat_filter_list.csv and relation_product_ver2.csv to mute list.
+                for (int i = 0; i < CHAR_MAX; i++)
+                    addresses[i] = NULL;
+            }
+            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/relation_product_ver2.csv", addresses, "utf-16");
+            if (addresses[1] != NULL) // 0 will cause crash
+            {
+                PackerMuteMultiFile(addresses[1], "lstrike/locale_chn/resource/relation_product_ver2.csv", 0x78);
+                muted++;
             }
         }
         cout << "已屏蔽不应该被加载的 " << muted << " 个文件.\n";
@@ -204,6 +212,28 @@ int main()
 
     mem->Detach();
     return 0;
+}
+
+void PackerMuteMultiFile(DWORD address, string file, DWORD index)
+{
+    DWORD addr = address - index * mem->Read<byte>(address - 3);
+    for (int i = 0; i < 0xFF; i++)
+    {
+        if (mem->Read<byte>(address - 3) != i) // the file list ended, so we don't need to continue
+        {
+            
+            break;
+        }
+        wstring tempws(mem->Read<bigstr>(addr + index * i).text);
+        // not safe, will lost data if any word is a non-ascii character
+        // find a better way to do this!
+        string filename(tempws.begin(), tempws.end());
+        if (filename.find("lstrike") == -1)
+            continue; // we don't break because some info is encrypted and it will cause problem
+
+        if (filename == file)
+            mem->Write(addr + index * i, L"null");
+    }
 }
 
 string CheckMemFile()
