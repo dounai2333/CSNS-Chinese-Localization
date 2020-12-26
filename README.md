@@ -32,7 +32,7 @@ Thats because this program is working like other normal cheating software (memor
 USE AT YOUR OWN RISK!
 
 ### Is this program will stop working after game updates?
-I'm not sure, I have do it as much as possible to compatible with game update (signature scan).
+I'm not sure, I have do it as much as possible to compatible with game update.
 
 But still, you can always download the source code, update the address and build for yourself!
 
