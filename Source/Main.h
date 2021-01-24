@@ -42,7 +42,7 @@ using std::string;
 void PackerMuteMultiFile(DWORD address, string file, DWORD index);
 string CheckMemFile();
 // Type: i8 ui8 i16 i32 i64 ui16 ui32 ui64 fs fd s h c b
-// most type in non-tested (because I don't need it), so take care!
+// most type is untested (because I don't need it), so take care when use them!
 DWORD RunMemScanAndGetExitCode(DWORD ProcessID, string Type, string Value, string Encoding = "utf-8");
 void RunMemScanAndGetAllAddress(DWORD ProcessID, string Type, string Value, DWORD (&output)[CHAR_MAX], string Encoding = "utf-8");
 

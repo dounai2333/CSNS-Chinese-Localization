@@ -1,4 +1,4 @@
-## Counter-Strike Nexon: Studio / Zombies 汉化工具
+## Counter-Strike Online (Nexon: Studio / Zombies) 汉化工具
 
 [![](https://img.shields.io/badge/许可证-MIT-green)](./LICENSE_CN)
 [![](https://img.shields.io/badge/发行版版本-1.2-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.2)
@@ -10,17 +10,24 @@
 
 - 随时欢迎进行二次开发或发问题贴/合并请求!
 
+### 重要信息
+**[第8赛季更新](https://csol.tiancity.com/homepage/article/2021/01/20/59816.html)更新了Packer文件并且使我的部分代码失效, 如果你使用第8赛季更新后的Packer文件你可能会遇见BUG!**
+
+**使用[这个链接](http://cdnpatch.csonlinechina.com/CSOUpdate_OBT_CHN210104.exe)获得旧版本的chn Packer文件(需要一个文件改名为"CSOLauncher.exe"即可使用)**
+
+由于游戏闪退和内存扫描程序的一些问题我没法立刻进行修复, 因此请使用旧版本的Packer文件!
+
 ### 如何使用?
 1. 保证你的游戏语言为英语 (English, na_en)
 2. 从反恐精英Online(国服)里提取出cstrike_chn.nar
 3. 复制, 并将其粘贴到CSN:S的Data文件夹内
-4. 将其改名为fixtrike.nar
+4. 将其改名为fixtrike.nar或替换掉cstrike_na_en.nar
 5. 从反恐精英Online(国服)里提取出chn_00000.pak*
 6. 复制, 并将其粘贴到CSN:S的Data\Packer文件夹内
 7. 当右下角加载N社反作弊*时开启程序
 8. 完事! 享受吧!
 
-chn_00000.pak: 别疑惑了, 你也需要其他同名文件 (chn_00001.pak, 00002等...)
+*chn_00000.pak: 别疑惑了, 你也需要其他同名文件 (chn_00001.pak, 00002等...)
 
 *N社反作弊: 长方形的蓝框, 中间显示白字NEXON GAME SECURITY
 

@@ -10,11 +10,18 @@ A localization program that can let CSN:S load the Chinese.
 
 - Secondary development and issue / pull request are always welcome!
 
+### Important
+**The [Season 8 update](https://csol.tiancity.com/homepage/article/2021/01/20/59816.html) updated the Packer file and it break some of my codes, if you use the Packer file after Season 8 update you may hit some problem!**
+
+**Use [this link](http://cdnpatch.csonlinechina.com/CSOUpdate_OBT_CHN210104.exe) to get the old chn Packer file (need a file named "CSOLauncher.exe" then you can use it)**
+
+Due the game crash and Memory Scan program's problem i cannot fix it soon, so use old Packer file instead!
+
 ### How to use?
 1. Make sure your game language is English
 2. Get cstrike_chn.nar from CSO China client
 3. Copy it and paste to CSN:S Data folder
-4. Rename it to fixtrike.nar
+4. Rename it to fixtrike.nar or replace cstrike_na_en.nar
 5. Get chn_00000.pak* from CSO China client
 6. Copy it and paste to CSN:S Data\Packer folder
 7. Start the program when Nexon Anti-Cheat* is loading
