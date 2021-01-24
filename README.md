@@ -11,7 +11,7 @@ A localization program that can let CSN:S load the Chinese.
 - Secondary development and issue / pull request are always welcome!
 
 ### Important
-**The [Season 8 update](https://csol.tiancity.com/homepage/article/2021/01/20/59816.html) updated the Packer file and it break some of my codes, if you use the Packer file after Season 8 update you may hit some problem!**
+**The [Season 8 update](https://translate.google.com/translate?sl=zh-CN&tl=en&u=https://csol.tiancity.com/homepage/article/2021/01/20/59816.html) updated the Packer file and it break some of my codes, if you use the Packer file after Season 8 update you may hit some problem!**
 
 **Use [this link](http://cdnpatch.csonlinechina.com/CSOUpdate_OBT_CHN210104.exe) to get the old chn Packer file (need a file named "CSOLauncher.exe" then you can use it)**
 
