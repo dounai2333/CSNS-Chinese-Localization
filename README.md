@@ -11,11 +11,11 @@ A localization program that can let CSN:S load the Chinese.
 - Secondary development and issue / pull request are always welcome!
 
 ### Important
-**The [Season 8 update](https://translate.google.com/translate?sl=zh-CN&tl=en&u=https://csol.tiancity.com/homepage/article/2021/01/20/59816.html) updated the Packer file and it break some of my codes, if you use the Packer file after Season 8 update you may hit some problem!**
+**Current the chn Packer file from [Season 8 update](https://translate.google.com/translate?sl=zh-CN&tl=en&u=https://csol.tiancity.com/homepage/article/2021/01/20/59816.html) are breaking some of my codes and it will cause some file cannot be muted anymore!**
 
-**Use [this link](http://cdnpatch.csonlinechina.com/CSOUpdate_OBT_CHN210104.exe) to get the old chn Packer file (need a file named "CSOLauncher.exe" then you can use it)**
+**If you cannot login due to indecent words about your account or password, please prevent using it!**
 
-Due the game crash and Memory Scan program's problem i cannot fix it soon, so use old Packer file instead!
+Please wait until I have fixed this problem, and any help is welcomed!
 
 ### How to use?
 1. Make sure your game language is English

@@ -11,11 +11,11 @@
 - 随时欢迎进行二次开发或发问题贴/合并请求!
 
 ### 重要信息
-**[第8赛季更新](https://csol.tiancity.com/homepage/article/2021/01/20/59816.html)更新了Packer文件并且使我的部分代码失效, 如果你使用第8赛季更新后的Packer文件你可能会遇见BUG!**
+**目前由于[第8赛季更新](https://csol.tiancity.com/homepage/article/2021/01/20/59816.html)的chn Packer文件使我的部分代码失效, 某些文件已无法再被屏蔽!**
 
-**使用[这个链接](http://cdnpatch.csonlinechina.com/CSOUpdate_OBT_CHN210104.exe)获得旧版本的chn Packer文件(需要一个文件改名为"CSOLauncher.exe"即可使用)**
+**如果你因帐号或密码里有不雅词汇而导致无法登录, 请避免使用被屏蔽的字符!**
 
-由于游戏闪退和内存扫描程序的一些问题我没法立刻进行修复, 因此请使用旧版本的Packer文件!
+请在我修复这个问题前略作等待, 如果您愿意提供帮助, 随时欢迎!
 
 ### 如何使用?
 1. 保证你的游戏语言为英语 (English, na_en)
