@@ -124,7 +124,6 @@ int main()
             filename.replace(filename.begin(), filename.begin() + filename.find("/", 2) + 1, "");
 
             if (filename == "resource/bad_words.csv"               /*脏话屏蔽列表*/ ||
-                filename == "resource/chat_filter_list.csv"        /*早期的脏话屏蔽列表*/ ||
                 filename == "resource/item.csv"                    /*游戏里各种道具的定义*/ ||
                 filename == "resource/relation_product_ver2.csv"   /*商城道具的定义*/ ||
                 filename == "sound/training/cstrain11.wav"         /*教程关的语音提示*/ ||
@@ -179,15 +178,6 @@ int main()
             if (addresses[1] != NULL) // 0 will cause crash
             {
                 PackerMuteMultiFile(addresses[1], "lstrike/locale_chn/resource/bad_words.csv", 0x68);
-                muted++;
-
-                for (int i = 0; i < CHAR_MAX; i++)
-                    addresses[i] = NULL;
-            }
-            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/chat_filter_list.csv", addresses, "utf-16");
-            if (addresses[1] != NULL) // 0 will cause crash
-            {
-                PackerMuteMultiFile(addresses[1], "lstrike/locale_chn/resource/chat_filter_list.csv", 0x78);
                 muted++;
 
                 for (int i = 0; i < CHAR_MAX; i++)
