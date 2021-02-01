@@ -365,6 +365,38 @@ std::string Mem::GetProcessNameById(DWORD name)
 	return nn;
 }
 
+DWORD Mem::GetThreadById(DWORD name)
+{
+	HANDLE hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
+	THREADENTRY32 te32;
+
+	if (hSnapshot == INVALID_HANDLE_VALUE)
+	{
+		return NULL;
+	}
+
+	te32.dwSize = sizeof(THREADENTRY32);
+
+	if (!Thread32First(hSnapshot, &te32))
+	{
+		CloseHandle(hSnapshot);
+		return NULL;
+	}
+
+	bool finded = false;
+	do
+	{
+		if (te32.th32OwnerProcessID == name)
+		{
+			finded = true;
+			break;
+		}
+	} while (Thread32Next(hSnapshot, &te32));
+
+	CloseHandle(hSnapshot);
+	return finded ? te32.th32ThreadID : NULL;
+}
+
 std::string Mem::GetWindowById(DWORD name)
 {
 	EnumWindows(EnumWindowsProcMy, name);

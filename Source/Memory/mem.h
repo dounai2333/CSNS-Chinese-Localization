@@ -93,6 +93,7 @@ public:
 	HWND					WindowHandle = NULL;
 	std::string				GetWindowById(DWORD name);
 	std::string				GetProcessNameById(DWORD name);
+	DWORD					GetThreadById(DWORD name);
 	std::string				GetWindowByName(const std::string& name);
 	DWORD					GetProcessIdByName(const std::string& name);
 	std::string				GetProcessNameByWindow(const std::string& name);

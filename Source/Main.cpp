@@ -34,7 +34,7 @@ int main()
     Module* hw = mem->GetModule("hw.dll");
     Module* filesystem = mem->GetModule("filesystem_nar.dll");
     cout << "hw\t\t- 0x" << (int*)hw->GetImage() << "\n";
-    cout << "filesystem_nar\t- 0x" << (int*)filesystem->GetImage() << "\n";
+    cout << "filesystem_nar\t- 0x" << (int*)filesystem->GetImage() << "\n\n";
     
     if (mem->GetModule("mp.dll"))
     {
@@ -43,7 +43,7 @@ int main()
         system("pause");
         exit(-1);
     }
-
+    
     // string, original content: /cstrike_na_en/
     // if filesysyem_nar.dll get any update then we need to check this
     // address - 0x30 = /fixtrike/
@@ -55,7 +55,7 @@ int main()
 
     string cstrike_na_en_addr_text = mem->Read<str>(cstrike_na_en_addr).text;
     string lang_addr_text = mem->Read<str>(lang_addr).text;
-
+    
     if (cstrike_na_en_addr_text == "/cstrike_chn/" && lang_addr_text == "chn")
     {
         system("cls");
@@ -70,17 +70,17 @@ int main()
         system("pause");
         exit(-1);
     }
-
-    // pause the game process so we can do the memory scan and override without trouble
-    DebugActiveProcess(mem->m_dwProcessId);
-    DebugSetProcessKillOnExit(false);
-    cout << "\n已冻结游戏进程,正在进行操作...\n\n";
     
     mem->Write(cstrike_na_en_addr, "/cstrike_chn/");
     cout << "国服nar重定向已完成\n";
 
     mem->WriteProtected(lang_addr, "chn");
-    cout << "选择中国语已完成\n\n";
+    cout << "简体中文重定向已完成\n";
+
+    // get the main thread handle so we can use it for pause and debug features
+    HANDLE h_thread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
+    // pause the game process so we can do the memory scan and override without trouble
+    SuspendThread(h_thread);
 
     DWORD resource_addr = NULL;
     DWORD cstrike_na_en_packer_addr = NULL;
@@ -88,7 +88,6 @@ int main()
     string memfile_missing_list = CheckMemFile();
     if (memfile_missing_list == "")
     {
-        cout << "正在执行内存扫描,请稍等...\n";
         DWORD exitcode = RunMemScanAndGetExitCode(mem->m_dwProcessId, "h", "2F 63 73 74 72 69 6B 65 5F 63 68 6E 2F 72 65 73 6F 75 72 63 65 2F 62 61 63 6B 67 72 6F 75 6E 64 2F 38 30 30 5F 32 5F 63 5F 61 64 76 69 63 65 2E 74 67 61 00 33 00 00 00 33");
         DWORD exitcode2 = RunMemScanAndGetExitCode(mem->m_dwProcessId, "s", "../Data/Packer/chn_00000.pak", "utf-16");
         if ((string)mem->Read<str>(exitcode).text == "/cstrike_chn/resource/background/800_2_c_advice.tga")
@@ -97,20 +96,20 @@ int main()
             if (exitcode2 != 2)
                 cstrike_na_en_packer_addr = RunMemScanAndGetExitCode(mem->m_dwProcessId, "s", "/lstrike/locale_na_en/");
             else
-                cout << "未检测到chn_00000.pak, 已跳过pak重定向...\n";
+                cout << "\nchn_00000.pak缺失!\n其应被放置在Packer内且不得改名!\n\n如果您正在尝试读取非chn的pak文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
         }
         else if (exitcode == 2)
         {
-            cout << "内存扫描失败!\n请检查fixtrike.nar和chn_00000.pak!\n其应分别被放置在Data和Packer内且不得改名!\n\n如果您正在尝试读取非chn的nar/pak文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
+            cout << "\nfixtrike.nar缺失!\n其应被放置在Data内且不得改名!\n\n如果您正在尝试读取非chn的nar文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
         }
         else
         {
-            cout << "内存扫描出现意外错误!\n返回数值:" << exitcode << "(" << Misc->DecimalToHex(exitcode, true) << ")\n";
+            cout << "\n内存扫描出现意外错误!已跳过扫描!\n返回数值: " << Misc->DecimalToHex(exitcode, true) << "\n";
         }
     }
     else
     {
-        cout << "因缺少内存扫描必要文件,已跳过...\n不进行内存扫描可能会导致游戏出现问题!\n缺少文件: "<<memfile_missing_list<<"\n";
+        cout << "\n因缺少内存扫描必要文件,已跳过扫描!\n不进行内存扫描可能会导致游戏出现问题!\n缺少文件: "<<memfile_missing_list<<"\n";
     }
 
     if (resource_addr != NULL)
@@ -159,40 +158,130 @@ int main()
         if (cstrike_na_en_packer_addr != NULL && cstrike_na_en_packer_addr != 2)
         {
             mem->Write(cstrike_na_en_packer_addr, "/lstrike/locale_chn/");
-            cout << "国服pak重定向已完成\n";
-
-            // maybe somedays Item.csv will be rename to item.csv
-            DWORD item = RunMemScanAndGetExitCode(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/item.csv", "utf-16");
-            if (item != 2)
-            {
-                PackerMuteMultiFile(item, "lstrike/locale_chn/resource/item.csv", 0x58);
-                muted++;
-            }
-            
-            // 别骂了别骂了 我知道代码不好看重复性还高 但是不这样写不行
-            // C++的[]被方法转成*会丢失数据 某文件的index还不一样 我太南了1551
-            DWORD addresses[CHAR_MAX];
-            for (int i = 0; i < CHAR_MAX; i++)
-                addresses[i] = NULL;
-            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/bad_words.csv", addresses, "utf-16");
-            if (addresses[1] != NULL) // 0 will cause crash
-            {
-                PackerMuteMultiFile(addresses[1], "lstrike/locale_chn/resource/bad_words.csv", 0x68);
-                muted++;
-
-                for (int i = 0; i < CHAR_MAX; i++)
-                    addresses[i] = NULL;
-            }
-            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/relation_product_ver2.csv", addresses, "utf-16");
-            if (addresses[1] != NULL) // 0 will cause crash
-            {
-                PackerMuteMultiFile(addresses[1], "lstrike/locale_chn/resource/relation_product_ver2.csv", 0x78);
-                muted++;
-            }
+            cout << "国服pak重定向已完成\n\n";
         }
+
+        // resume the game process and let debug start on
+        ResumeThread(h_thread);
+        // close the handle because it has been modified
+        CloseHandle(h_thread);
+        h_thread = NULL;
+
+        cout << "开始监控游戏文件读取状态...\n请勿关闭汉化程序! 否则游戏将崩溃!!!\n\n";
+
+        // set priority of both to improve performance
+        DWORD gamepri = GetPriorityClass(mem->m_hProcess);
+        SetPriorityClass(GetCurrentProcess(), ((thread::hardware_concurrency() >= 4) ? REALTIME_PRIORITY_CLASS : HIGH_PRIORITY_CLASS));
+        SetPriorityClass(mem->m_hProcess, HIGH_PRIORITY_CLASS);
+
+        debug: DebugActiveProcess(mem->m_dwProcessId);
+        DebugSetProcessKillOnExit(false);
+
+        // compilation, asm context: movzx esi,word ptr [eax]
+        // the eax address is what we want everytime when this asm has been called
+        // if filesysyem_nar.dll get any update then we need to check this
+        DWORD filesystem_asm_addr = filesystem->GetImage() + 0xF4B8;
+
+        h_thread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
+        CONTEXT ctx;
+        ctx.ContextFlags = CONTEXT_DEBUG_REGISTERS;
+        GetThreadContext(h_thread, &ctx);
+        // set breakpoint on this address
+        ctx.Dr0 = filesystem_asm_addr;
+        // breakpoint type: hardware (0 will caught event without information)
+        ctx.Dr7 = 1;
+        SetThreadContext(h_thread, &ctx);
+
+        DEBUG_EVENT dbgEvent;
+        DWORD dbgFlag = DBG_CONTINUE;
+        bool loop = true;
+        while (loop)
+        {
+            if (!WaitForDebugEvent(&dbgEvent, INFINITE))
+            {
+                cout << "调试器出现意外错误!已跳过监控!\n返回数值: "<<Misc->DecimalToHex(GetLastError(), true)<<"\n";
+                break;
+            }
+
+            dbgFlag = DBG_CONTINUE;
+            if (dbgEvent.dwDebugEventCode == EXCEPTION_DEBUG_EVENT && dbgEvent.u.Exception.ExceptionRecord.ExceptionCode == EXCEPTION_ACCESS_VIOLATION)
+            {
+                // this error occur after new dll module has been loaded and game trying to read it but our debugger didn't know about new module
+                // a refresh is needed or process will hanging forever
+                CloseHandle(h_thread);
+                DebugActiveProcessStop(mem->m_dwProcessId);
+                goto debug;
+            }
+
+            if (dbgEvent.dwDebugEventCode == EXCEPTION_DEBUG_EVENT && dbgEvent.u.Exception.ExceptionRecord.ExceptionCode == EXCEPTION_SINGLE_STEP)
+            {
+                if (dbgEvent.u.Exception.ExceptionRecord.ExceptionAddress == (LPVOID)filesystem_asm_addr)
+                {
+                    CONTEXT ctx1;
+                    ctx1.ContextFlags = CONTEXT_FULL;
+                    GetThreadContext(h_thread, &ctx1);
+                    ctx1.EFlags |= 0x10000;
+                    SetThreadContext(h_thread, &ctx1);
+
+                    if (ctx1.Eax < 0x100)
+                    {
+                        ContinueDebugEvent(dbgEvent.dwProcessId, dbgEvent.dwThreadId, dbgFlag);
+                        continue;
+                    }
+
+                    wstring tempws(mem->Read<bigstr>(ctx1.Eax).text);
+                    // not safe, will lost data if any word is a non-ascii character
+                    // find a better way to do this!
+                    string filename(tempws.begin(), tempws.end());
+                    if (filename.find("fixtrike/")  != -1 ||
+                        filename.find("lstrike/")   != -1 ||
+                        filename.find("fstrike/")   != -1 ||
+                        filename.find("estrike/")   != -1 ||
+                        filename.find("dstrike/")   != -1 ||
+                        filename.find("cstrike/")   != -1 ||
+                        filename.find("valve/")     != -1)
+                    {
+                        if (filename == "lstrike/locale_chn/resource/item.csv"                      ||
+                            filename == "lstrike/locale_chn/resource/bad_words.csv"                 ||
+                            filename == "lstrike/locale_chn/resource/relation_product_ver2.csv.csv" ||
+                            false /* change the list here! */)
+                        {
+                            muted++;
+                            mem->Write(ctx1.Eax, L"null");
+                        }
+
+                        //Misc->SetConsoleSize(900, 380);
+                        //cout << filename << "   \t\r" << flush;
+                    }
+                }
+                else
+                {
+                    dbgFlag = DBG_EXCEPTION_NOT_HANDLED;
+                }
+            }
+            else
+            {
+                dbgFlag = DBG_EXCEPTION_NOT_HANDLED;
+            }
+
+            if (mem->GetModule("mp.dll"))
+            {
+                GetThreadContext(h_thread, &ctx);
+                ctx.Dr0 = 0;
+                ctx.Dr7 = 0x400;
+                SetThreadContext(h_thread, &ctx);
+                loop = false;
+            }
+
+            ContinueDebugEvent(dbgEvent.dwProcessId, dbgEvent.dwThreadId, dbgFlag);
+        }
+        SetPriorityClass(mem->m_hProcess, gamepri);
+        DebugActiveProcessStop(mem->m_dwProcessId);
+        CloseHandle(h_thread);
+
         cout << "已屏蔽不应该被加载的 " << muted << " 个文件.\n";
     }
-    cout << "\n操作执行完毕,已加载汉化! :)\n按下任意键退出汉化程序解冻游戏进程!\nMade by dounai2333 (QQ1328600509)\n";
+    cout << "\n操作执行完毕,已加载汉化! :)\n按下任意键退出汉化程序!\nMade by dounai2333 (QQ1328600509)\n";
     system("pause");
     //Sleep(3000);
 
