@@ -15,7 +15,9 @@ Current the Release 1.2 build cannot mute bad_words.csv from chn files anymore!
 
 That means, if your account / password has indecent text, you will not be able to login with your account!
 
-You may want to try [Pre-release 1.3 with huge performance issues](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3). Also i'm looking for help for 1.3, [start a new pull request here](https://github.com/dounai2333/CSNS-Chinese-Localization/compare)!
+You may want to try [Pre-release 1.3 with huge performance issues](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3).
+
+Also i'm looking for help for 1.3, [start a new pull request here](https://github.com/dounai2333/CSNS-Chinese-Localization/compare)!
 
 ### How to use?
 1. Make sure your game language is English

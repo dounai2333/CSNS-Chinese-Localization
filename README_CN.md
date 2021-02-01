@@ -15,7 +15,9 @@
 
 这意味着, 如果你的帐号/密码里有不雅词汇, 你将无法再正常登录你的帐号!
 
-也许你会想试试[具有严重性能问题的1.3试发行版](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3). 此外我正在寻求1.3的帮助, [点击这里发起新的合并请求](https://github.com/dounai2333/CSNS-Chinese-Localization/compare)!
+也许你会想试试[具有严重性能问题的1.3试发行版](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3).
+
+此外我正在寻求1.3的帮助, [点击这里发起新的合并请求](https://github.com/dounai2333/CSNS-Chinese-Localization/compare)!
 
 ### 如何使用?
 1. 保证你的游戏语言为英语 (English, na_en)
