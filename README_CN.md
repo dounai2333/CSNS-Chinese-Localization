@@ -10,12 +10,12 @@
 
 - 随时欢迎进行二次开发或发问题贴/合并请求!
 
-### 重要信息
-**目前由于[第8赛季更新](https://csol.tiancity.com/homepage/article/2021/01/20/59816.html)的chn Packer文件使我的部分代码失效, 某些文件已无法再被屏蔽!**
+### 告示
+当前1.2发行版已无法再屏蔽国服的bad_words.csv!
 
-**如果你因帐号或密码里有不雅词汇而导致无法登录, 请避免使用被屏蔽的字符!**
+这意味着, 如果你的帐号/密码里有不雅词汇, 你将无法再正常登录你的帐号!
 
-请在我修复这个问题前略作等待, 如果您愿意提供帮助, 随时欢迎!
+也许你会想试试[具有严重性能问题的1.3试发行版](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3). 此外我正在寻求1.3的帮助, [点击这里发起新的合并请求](https://github.com/dounai2333/CSNS-Chinese-Localization/compare)!
 
 ### 如何使用?
 1. 保证你的游戏语言为英语 (English, na_en)

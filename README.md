@@ -10,12 +10,12 @@ A localization program that can let CSN:S load the Chinese.
 
 - Secondary development and issue / pull request are always welcome!
 
-### Important
-**Current the chn Packer file from [Season 8 update](https://translate.google.com/translate?sl=zh-CN&tl=en&u=https://csol.tiancity.com/homepage/article/2021/01/20/59816.html) are breaking some of my codes and it will cause some file cannot be muted anymore!**
+### Notice
+Current the Release 1.2 build cannot mute bad_words.csv from chn files anymore!
 
-**If you cannot login due to indecent words about your account or password, please prevent using it!**
+That means, if your account / password has indecent text, you will not be able to login with your account!
 
-Please wait until I have fixed this problem, and any help is welcomed!
+You may want to try [Pre-release 1.3 with huge performance issues](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3). Also i'm looking for help for 1.3, [start a new pull request here](https://github.com/dounai2333/CSNS-Chinese-Localization/compare)!
 
 ### How to use?
 1. Make sure your game language is English
