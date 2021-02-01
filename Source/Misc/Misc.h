@@ -40,8 +40,8 @@ public:
 	bool FileExist(std::string file);
 	std::string DecimalToHex(int input, bool withhexmark = false);
 	int HexToDecimal(std::string input);
-	std::string ToUpper(std::string& text);
-	std::string ToLower(std::string& text);
+	std::string ToUpper(std::string text);
+	std::string ToLower(std::string text);
 	int GetKeyFromString( std::string str );
 	std::string GetStringFromKey( int key );
 };
