@@ -43,7 +43,7 @@ int main()
         system("pause");
         exit(-1);
     }
-    
+
     // string, original content: /cstrike_na_en/
     // if filesysyem_nar.dll get any update then we need to check this
     // address - 0x30 = /fixtrike/
@@ -55,7 +55,7 @@ int main()
 
     string cstrike_na_en_addr_text = mem->Read<str>(cstrike_na_en_addr).text;
     string lang_addr_text = mem->Read<str>(lang_addr).text;
-    
+
     if (cstrike_na_en_addr_text == "/cstrike_chn/" && lang_addr_text == "chn")
     {
         system("cls");
@@ -77,7 +77,7 @@ int main()
     mem->WriteProtected(lang_addr, "chn");
     cout << "简体中文重定向已完成\n";
 
-    // get the main thread handle so we can use it for pause and debug features
+    // get the main thread handle for pause and debug features
     HANDLE h_thread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
     // pause the game process so we can do the memory scan and override without trouble
     SuspendThread(h_thread);
