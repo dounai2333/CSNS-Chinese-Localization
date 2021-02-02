@@ -17,7 +17,9 @@
 
 也许你会想试试[具有严重性能问题的1.3试发行版](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3).
 
-此外我正在寻求1.3的帮助, [点击这里发起新的合并请求](https://github.com/dounai2333/CSNS-Chinese-Localization/compare)!
+还有我正在寻求帮助以解决性能问题,
+
+如果你愿意帮助我, 请"分支(Fork)"这个项目, 做一些改变, 然后[发起新的合并请求](https://github.com/dounai2333/CSNS-Chinese-Localization/compare)!
 
 ### 如何使用?
 1. 保证你的游戏语言为英语 (English, na_en)

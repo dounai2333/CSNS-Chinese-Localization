@@ -30,7 +30,6 @@ int main()
     cout <<"cstrike-online.exe (PID: "<< mem->m_dwProcessId << ") attached.\n"
          <<"Attach handle: "<< (int)mem->m_hProcess <<"("<< Misc->DecimalToHex((int)mem->m_hProcess, true) <<")\n\n";
 
-    // if user start program too early, we will hit exception in here.
     Module* hw = mem->GetModule("hw.dll");
     Module* filesystem = mem->GetModule("filesystem_nar.dll");
     cout << "hw\t\t- 0x" << (int*)hw->GetImage() << "\n";
@@ -293,8 +292,8 @@ int main()
         cout << "已屏蔽不应该被加载的 " << muted << " 个文件.\n\n";
     }
     cout << "操作执行完毕,已加载汉化! :)\nMade by dounai2333(QQ1328600509)\n\n";
-    cout << "程序将在 " << 3 << " 秒后退出." << "\t\r" << flush;
-    for (int i = 2; i >= 0; i--)
+    cout << "程序将在 " << 9 << " 秒后退出." << "\t\r" << flush;
+    for (int i = 8; i >= 0; i--)
     {
         Sleep(1000);
         cout << "程序将在 " << i << " 秒后退出." << "\t\r" << flush;

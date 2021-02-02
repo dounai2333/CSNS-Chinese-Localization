@@ -8,7 +8,7 @@ A localization program that can let CSN:S load the Chinese.
 
 **This project is current under [MIT license](./LICENSE) and written in C++, build with VS2019.**
 
-- Secondary development and issue / pull request are always welcome!
+- Secondary development and issues / pull requests are always welcome!
 
 ### Notice
 Current the Release 1.2 build cannot mute bad_words.csv from chn files anymore!
@@ -17,7 +17,9 @@ That means, if your account / password has indecent text, you will not be able t
 
 You may want to try [Pre-release 1.3 with huge performance issues](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3).
 
-Also i'm looking for help for 1.3, [start a new pull request here](https://github.com/dounai2333/CSNS-Chinese-Localization/compare)!
+Also i'm looking for help to solve about performance issues,
+
+if you want to help me, fork my project, do some changes, then [start a new pull request](https://github.com/dounai2333/CSNS-Chinese-Localization/compare)!
 
 ### How to use?
 1. Make sure your game language is English
