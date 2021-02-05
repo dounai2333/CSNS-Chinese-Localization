@@ -272,11 +272,12 @@ int main(int argc, const char* argv[])
             DebugActiveProcessStop(mem->m_dwProcessId);
             CloseHandle(hThread);
 
-            cout << "已阻止不应该被加载的 " << muted << " 个文件.\n\n";
+            cout << "已阻止 " << muted << " 个不应该被加载的文件.\n\n";
         }
     }
 
     cout << "操作执行完毕,已加载汉化! :)\nMade by dounai2333(QQ1328600509)\n\n";
+    mem->Detach();
 
     if (Arg->Exist("-autoexit"))
     {
@@ -292,9 +293,6 @@ int main(int argc, const char* argv[])
         cout << "按下任意键关闭汉化程序...\n";
         system("pause");
     }
-
-    Arg->Clear();
-    mem->Detach();
     return 0;
 }
 
