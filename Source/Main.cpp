@@ -45,8 +45,8 @@ int main()
 
     // string, original content: /cstrike_na_en/ (if user's game language isn't English, na_en will be others like na_ru etc...)
     // if filesysyem_nar.dll get any update then we need to check this
+    // don't remove + 0x30 or any file in nar will override same file come from pak
     // address - 0x30 = /fixtrike/
-    // note: don't remove + 0x30 or any file in nar will override same file come from pak
     DWORD cstrike_na_en_addr = mem->Read<DWORD>(filesystem->GetImage() + 0xCC6E4) + 0x30;
     // string, original content: /lstrike/locale_na_en/ (if user's game language isn't English, na_en will be others like na_ru etc...)
     // if filesystem_nar.dll get any update then we need to check this
@@ -85,13 +85,7 @@ int main()
     mem->WriteProtected(lang_addr, "chn");
     cout << "简体中文重定向已完成\n\n";
 
-    // get the main thread handle for pause and debug features
-    HANDLE h_thread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
-    // pause the game process so we can do the memory scan and override without trouble
-    SuspendThread(h_thread);
-
     DWORD resource_addr = NULL;
-
     string memfile_missing_list = CheckMemFile();
     if (memfile_missing_list == "")
     {
@@ -107,12 +101,6 @@ int main()
     {
         cout << "\n因缺少内存扫描必要文件,已跳过扫描!\n不进行内存扫描可能会导致游戏出现问题!\n缺少文件: "<<memfile_missing_list<<"\n";
     }
-
-    // resume the game process and let debug start on
-    ResumeThread(h_thread);
-    // close the handle because it has been modified
-    CloseHandle(h_thread);
-    h_thread = NULL;
 
     if (resource_addr != NULL)
     {
@@ -172,14 +160,14 @@ int main()
         // if filesysyem_nar.dll get any update then we need to check this
         DWORD filesystem_asm_addr = filesystem->GetImage() + 0xF4B8;
 
-        h_thread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
+        HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
         CONTEXT ctx;
         ctx.ContextFlags = CONTEXT_DEBUG_REGISTERS;
-        GetThreadContext(h_thread, &ctx);
+        GetThreadContext(hThread, &ctx);
         // set breakpoint on this address
         ctx.Dr0 = filesystem_asm_addr;
         ctx.Dr7 = 1;
-        SetThreadContext(h_thread, &ctx);
+        SetThreadContext(hThread, &ctx);
 
         DEBUG_EVENT dbgEvent;
         DWORD dbgFlag = DBG_CONTINUE;
@@ -197,7 +185,7 @@ int main()
             {
                 // this error occur after new dll module has been loaded and game trying to read it but our debugger didn't know about new module
                 // a refresh is needed or process will hanging forever
-                CloseHandle(h_thread);
+                CloseHandle(hThread);
                 DebugActiveProcessStop(mem->m_dwProcessId);
                 goto debug;
             }
@@ -208,9 +196,9 @@ int main()
                 {
                     CONTEXT ctx1;
                     ctx1.ContextFlags = CONTEXT_FULL;
-                    GetThreadContext(h_thread, &ctx1);
+                    GetThreadContext(hThread, &ctx1);
                     ctx1.EFlags |= 0x10000;
-                    SetThreadContext(h_thread, &ctx1);
+                    SetThreadContext(hThread, &ctx1);
 
                     if (ctx1.Eax < 0x100)
                     {
@@ -242,10 +230,10 @@ int main()
                         if (filename == "lstrike/common/resource/quest/medalclosed_l.tga")
                         {
                             // restore the original function
-                            GetThreadContext(h_thread, &ctx);
+                            GetThreadContext(hThread, &ctx);
                             ctx.Dr0 = 0;
                             ctx.Dr7 = 0x400;
-                            SetThreadContext(h_thread, &ctx);
+                            SetThreadContext(hThread, &ctx);
                             loop = false;
                             cout << "游戏已加载完毕, 终止监控...\n";
                         }
@@ -267,10 +255,10 @@ int main()
             if (GetAsyncKeyState(VK_DELETE) & 0x8000)
             {
                 // restore the original function
-                GetThreadContext(h_thread, &ctx);
+                GetThreadContext(hThread, &ctx);
                 ctx.Dr0 = 0;
                 ctx.Dr7 = 0x400;
-                SetThreadContext(h_thread, &ctx);
+                SetThreadContext(hThread, &ctx);
                 loop = false;
                 cout << "已手动按住Del终止监控...\n";
             }
@@ -279,7 +267,7 @@ int main()
         }
         SetPriorityClass(mem->m_hProcess, gamepri);
         DebugActiveProcessStop(mem->m_dwProcessId);
-        CloseHandle(h_thread);
+        CloseHandle(hThread);
 
         cout << "已屏蔽不应该被加载的 " << muted << " 个文件.\n\n";
     }
