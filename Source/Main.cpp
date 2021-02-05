@@ -43,12 +43,12 @@ int main()
         exit(-1);
     }
 
-    // string, original content: /cstrike_na_en/
+    // string, original content: /cstrike_na_en/ (if user's game language isn't English, na_en will be others like na_ru etc...)
     // if filesysyem_nar.dll get any update then we need to check this
     // address - 0x30 = /fixtrike/
     // note: don't remove + 0x30 or any file in nar will override same file come from pak
     DWORD cstrike_na_en_addr = mem->Read<DWORD>(filesystem->GetImage() + 0xCC6E4) + 0x30;
-    // string, original content: /lstrike/locale_na_en/
+    // string, original content: /lstrike/locale_na_en/ (if user's game language isn't English, na_en will be others like na_ru etc...)
     // if filesystem_nar.dll get any update then we need to check this
     // address + 0x30(= +0x48) = /lstrike/locale_na/ , + 0x60(= +0x78) = /lstrike/common/
     // note: the Packer (.pak) files will load from "lstrike"
