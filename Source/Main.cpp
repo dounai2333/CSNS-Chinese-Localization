@@ -272,7 +272,7 @@ int main(int argc, const char* argv[])
             DebugActiveProcessStop(mem->m_dwProcessId);
             CloseHandle(hThread);
 
-            cout << "已屏蔽不应该被加载的 " << muted << " 个文件.\n\n";
+            cout << "已阻止不应该被加载的 " << muted << " 个文件.\n\n";
         }
     }
 
@@ -293,6 +293,7 @@ int main(int argc, const char* argv[])
         system("pause");
     }
 
+    Arg->Clear();
     mem->Detach();
     return 0;
 }

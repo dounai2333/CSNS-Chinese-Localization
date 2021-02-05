@@ -35,6 +35,12 @@ if you want to help me, fork my project, do some changes, then [start a new pull
 
 *Nexon Anti-Cheat: In the lower right of your screen with blue background, showing white text NEXON GAME SECURITY
 
+### Available arguments
+
+- -dontblock : Don't try to block any file so game can load it normally.
+
+- -autoexit : Automatically exit the program when everything is done, will wait 5 seconds before exiting.
+
 ### Will I be banned for using this on Steam server?
 Will, most likely **YES**.
 
