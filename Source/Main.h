@@ -31,6 +31,7 @@
 #include <shlobj.h>
 
 #include "Misc\Misc.h"
+#include "Misc\ArgParser.h"
 
 #include "Memory\module.h"
 #include "Memory\mem.h"

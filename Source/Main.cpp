@@ -1,12 +1,13 @@
 ﻿#include "Main.h"
 
-int main()
+int main(int argc, const char* argv[])
 {
     SetConsoleTitle("CSN:S汉化程序");
     Misc->CloseConsoleQuickEdit();
     Misc->SetConsoleSize(370, 380);
     Misc->SetConsoleCursor(false);
     //Misc->SetConsoleEncoding(CP_UTF8);
+    Arg->Open(argc, argv);
 
     Misc->ConsoleClear();
 
@@ -85,201 +86,212 @@ int main()
     mem->WriteProtected(lang_addr, "chn");
     cout << "简体中文重定向已完成\n\n";
 
-    DWORD resource_addr = NULL;
-    string memfile_missing_list = CheckMemFile();
-    if (memfile_missing_list == "")
+    if (!Arg->Exist("-dontblock"))
     {
-        DWORD exitcode = RunMemScanAndGetExitCode(mem->m_dwProcessId, "h", "2F 63 73 74 72 69 6B 65 5F 63 68 6E 2F 72 65 73 6F 75 72 63 65 2F 62 61 63 6B 67 72 6F 75 6E 64 2F 38 30 30 5F 32 5F 63 5F 61 64 76 69 63 65 2E 74 67 61 00 33 00 00 00 33");
-        if ((string)mem->Read<str>(exitcode).text == "/cstrike_chn/resource/background/800_2_c_advice.tga")
-            resource_addr = exitcode;
-        else if (exitcode == 2)
-            cout << "\nnar文件缺失!\n其应被放置在Data内且不得改名!\n\n如果您正在尝试读取非国服的文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
-        else
-            cout << "\n内存扫描出现意外错误!已跳过扫描!\n返回数值: " << Misc->DecimalToHex(exitcode, true) << "\n";
-    }
-    else
-    {
-        cout << "\n因缺少内存扫描必要文件,已跳过扫描!\n不进行内存扫描可能会导致游戏出现问题!\n缺少文件: "<<memfile_missing_list<<"\n";
-    }
-
-    if (resource_addr != NULL)
-    {
-        int muted = 0;
-        for (int i = 0; i < 2048; i++)
+        DWORD resource_addr = NULL;
+        string memfile_missing_list = CheckMemFile();
+        if (memfile_missing_list == "")
         {
-            string filename = mem->Read<str>(resource_addr + i * 0x40).text;
-            if (filename.find("/cstrike_chn") == -1)
-                break;
-            filename.replace(filename.begin(), filename.begin() + filename.find("/", 2) + 1, "");
-
-            if (filename == "resource/bad_words.csv"               /*脏话屏蔽列表*/ ||
-                filename == "resource/item.csv"                    /*游戏里各种道具的定义*/ ||
-                filename == "resource/relation_product_ver2.csv"   /*商城道具的定义*/ ||
-                filename == "sound/training/cstrain11.wav"         /*教程关的语音提示*/ ||
-                filename == "sound/training/cstrain1.wav"          /*(我要听小姐姐!!国服两声提示音爬爬爬)*/ ||
-                filename == "sound/training/cstrain10.wav"         ||
-                filename == "sound/training/cstrain12.wav"         ||
-                filename == "sound/training/cstrain12a.wav"        ||
-                filename == "sound/training/cstrain13.wav"         ||
-                filename == "sound/training/cstrain15.wav"         ||
-                filename == "sound/training/cstrain16.wav"         ||
-                filename == "sound/training/cstrain17.wav"         ||
-                filename == "sound/training/cstrain18.wav"         ||
-                filename == "sound/training/cstrain19.wav"         ||
-                filename == "sound/training/cstrain2.wav"          ||
-                filename == "sound/training/cstrain2a.wav"         ||
-                filename == "sound/training/cstrain3.wav"          ||
-                filename == "sound/training/cstrain3a.wav"         ||
-                filename == "sound/training/cstrain4.wav"          ||
-                filename == "sound/training/cstrain5.wav"          ||
-                filename == "sound/training/cstrain6.wav"          ||
-                filename == "sound/training/cstrain7.wav"          ||
-                filename == "sound/training/cstrain7a.wav"         ||
-                filename == "sound/training/cstrain8.wav"          ||
-                filename == "sound/training/cstrain9.wav"          ||
-                filename == "sound/training/cstrain9a.wav"         ||
-                false /* change the list here! */)
-            {
-                muted++;
-                mem->Write(resource_addr + i * 0x40, "null");
-            }
+            DWORD exitcode = RunMemScanAndGetExitCode(mem->m_dwProcessId, "h", "2F 63 73 74 72 69 6B 65 5F 63 68 6E 2F 72 65 73 6F 75 72 63 65 2F 62 61 63 6B 67 72 6F 75 6E 64 2F 38 30 30 5F 32 5F 63 5F 61 64 76 69 63 65 2E 74 67 61 00 33 00 00 00 33");
+            if ((string)mem->Read<str>(exitcode).text == "/cstrike_chn/resource/background/800_2_c_advice.tga")
+                resource_addr = exitcode;
+            else if (exitcode == 2)
+                cout << "\nnar文件缺失!\n其应被放置在Data内且不得改名!\n\n如果您正在尝试读取非国服的文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
+            else
+                cout << "\n内存扫描出现意外错误!已跳过扫描!\n返回数值: " << Misc->DecimalToHex(exitcode, true) << "\n";
+        }
+        else
+        {
+            cout << "\n因缺少内存扫描必要文件,已跳过扫描!\n不进行内存扫描可能会导致游戏出现问题!\n缺少文件: " << memfile_missing_list << "\n";
         }
 
-        cout << "开始监控游戏文件读取状态...\n请勿关闭汉化程序! 否则游戏将崩溃!!!\n按住Del键可在游戏加载文件时终止监控\n\n";
-
-        // set priority of both to improve performance
-        DWORD gamepri = GetPriorityClass(mem->m_hProcess);
-        SetPriorityClass(GetCurrentProcess(), ((thread::hardware_concurrency() >= 4) ? REALTIME_PRIORITY_CLASS : HIGH_PRIORITY_CLASS));
-        SetPriorityClass(mem->m_hProcess, HIGH_PRIORITY_CLASS);
-
-    debug: DebugActiveProcess(mem->m_dwProcessId);
-        DebugSetProcessKillOnExit(false);
-
-        // compilation, asm context: movzx esi,word ptr [eax]
-        // the eax address is what we want everytime when this asm has been called
-        // if filesysyem_nar.dll get any update then we need to check this
-        DWORD filesystem_asm_addr = filesystem->GetImage() + 0xF4B8;
-
-        HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
-        CONTEXT ctx;
-        ctx.ContextFlags = CONTEXT_DEBUG_REGISTERS;
-        GetThreadContext(hThread, &ctx);
-        // set breakpoint on this address
-        ctx.Dr0 = filesystem_asm_addr;
-        ctx.Dr7 = 1;
-        SetThreadContext(hThread, &ctx);
-
-        DEBUG_EVENT dbgEvent;
-        DWORD dbgFlag = DBG_CONTINUE;
-        bool loop = true;
-        while (loop)
+        if (resource_addr != NULL)
         {
-            if (!WaitForDebugEvent(&dbgEvent, INFINITE))
+            int muted = 0;
+            for (int i = 0; i < 2048; i++)
             {
-                cout << "调试器出现意外错误!已跳过监控!\n返回数值: " << Misc->DecimalToHex(GetLastError(), true) << "\n";
-                break;
-            }
+                string filename = mem->Read<str>(resource_addr + i * 0x40).text;
+                if (filename.find("/cstrike_chn") == -1)
+                    break;
+                filename.replace(filename.begin(), filename.begin() + filename.find("/", 2) + 1, "");
 
-            dbgFlag = DBG_CONTINUE;
-            if (dbgEvent.dwDebugEventCode == EXCEPTION_DEBUG_EVENT && dbgEvent.u.Exception.ExceptionRecord.ExceptionCode == EXCEPTION_ACCESS_VIOLATION)
-            {
-                // this error occur after new dll module has been loaded and game trying to read it but our debugger didn't know about new module
-                // a refresh is needed or process will hanging forever
-                CloseHandle(hThread);
-                DebugActiveProcessStop(mem->m_dwProcessId);
-                goto debug;
-            }
-
-            if (dbgEvent.dwDebugEventCode == EXCEPTION_DEBUG_EVENT && dbgEvent.u.Exception.ExceptionRecord.ExceptionCode == EXCEPTION_SINGLE_STEP)
-            {
-                if (dbgEvent.u.Exception.ExceptionRecord.ExceptionAddress == (LPVOID)filesystem_asm_addr)
+                if (filename == "resource/bad_words.csv"               /*脏话屏蔽列表*/ ||
+                    filename == "resource/item.csv"                    /*游戏里各种道具的定义*/ ||
+                    filename == "resource/relation_product_ver2.csv"   /*商城道具的定义*/ ||
+                    filename == "sound/training/cstrain11.wav"         /*教程关的语音提示*/ ||
+                    filename == "sound/training/cstrain1.wav"          /*(我要听小姐姐!!国服两声提示音爬爬爬)*/ ||
+                    filename == "sound/training/cstrain10.wav" ||
+                    filename == "sound/training/cstrain12.wav" ||
+                    filename == "sound/training/cstrain12a.wav" ||
+                    filename == "sound/training/cstrain13.wav" ||
+                    filename == "sound/training/cstrain15.wav" ||
+                    filename == "sound/training/cstrain16.wav" ||
+                    filename == "sound/training/cstrain17.wav" ||
+                    filename == "sound/training/cstrain18.wav" ||
+                    filename == "sound/training/cstrain19.wav" ||
+                    filename == "sound/training/cstrain2.wav" ||
+                    filename == "sound/training/cstrain2a.wav" ||
+                    filename == "sound/training/cstrain3.wav" ||
+                    filename == "sound/training/cstrain3a.wav" ||
+                    filename == "sound/training/cstrain4.wav" ||
+                    filename == "sound/training/cstrain5.wav" ||
+                    filename == "sound/training/cstrain6.wav" ||
+                    filename == "sound/training/cstrain7.wav" ||
+                    filename == "sound/training/cstrain7a.wav" ||
+                    filename == "sound/training/cstrain8.wav" ||
+                    filename == "sound/training/cstrain9.wav" ||
+                    filename == "sound/training/cstrain9a.wav" ||
+                    false /* change the list here! */)
                 {
-                    CONTEXT ctx1;
-                    ctx1.ContextFlags = CONTEXT_FULL;
-                    GetThreadContext(hThread, &ctx1);
-                    ctx1.EFlags |= 0x10000;
-                    SetThreadContext(hThread, &ctx1);
+                    muted++;
+                    mem->Write(resource_addr + i * 0x40, "null");
+                }
+            }
 
-                    if (ctx1.Eax < 0x100)
+            cout << "开始监控游戏文件读取状态...\n请勿关闭汉化程序! 否则游戏将崩溃!!!\n按住Del键可在游戏加载文件时终止监控\n\n";
+
+            // set priority of both to improve performance
+            DWORD gamepri = GetPriorityClass(mem->m_hProcess);
+            SetPriorityClass(GetCurrentProcess(), ((thread::hardware_concurrency() >= 4) ? REALTIME_PRIORITY_CLASS : HIGH_PRIORITY_CLASS));
+            SetPriorityClass(mem->m_hProcess, HIGH_PRIORITY_CLASS);
+
+        debug: DebugActiveProcess(mem->m_dwProcessId);
+            DebugSetProcessKillOnExit(false);
+
+            // compilation, asm context: movzx esi,word ptr [eax]
+            // the eax address is what we want everytime when this asm has been called
+            // if filesysyem_nar.dll get any update then we need to check this
+            DWORD filesystem_asm_addr = filesystem->GetImage() + 0xF4B8;
+
+            HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
+            CONTEXT ctx;
+            ctx.ContextFlags = CONTEXT_DEBUG_REGISTERS;
+            GetThreadContext(hThread, &ctx);
+            // set breakpoint on this address
+            ctx.Dr0 = filesystem_asm_addr;
+            ctx.Dr7 = 1;
+            SetThreadContext(hThread, &ctx);
+
+            DEBUG_EVENT dbgEvent;
+            DWORD dbgFlag = DBG_CONTINUE;
+            bool loop = true;
+            while (loop)
+            {
+                if (!WaitForDebugEvent(&dbgEvent, INFINITE))
+                {
+                    cout << "调试器出现意外错误!已跳过监控!\n返回数值: " << Misc->DecimalToHex(GetLastError(), true) << "\n";
+                    break;
+                }
+
+                dbgFlag = DBG_CONTINUE;
+                if (dbgEvent.dwDebugEventCode == EXCEPTION_DEBUG_EVENT && dbgEvent.u.Exception.ExceptionRecord.ExceptionCode == EXCEPTION_ACCESS_VIOLATION)
+                {
+                    // this error occur after new dll module has been loaded and game trying to read it but our debugger didn't know about new module
+                    // a refresh is needed or process will hanging forever
+                    CloseHandle(hThread);
+                    DebugActiveProcessStop(mem->m_dwProcessId);
+                    goto debug;
+                }
+
+                if (dbgEvent.dwDebugEventCode == EXCEPTION_DEBUG_EVENT && dbgEvent.u.Exception.ExceptionRecord.ExceptionCode == EXCEPTION_SINGLE_STEP)
+                {
+                    if (dbgEvent.u.Exception.ExceptionRecord.ExceptionAddress == (LPVOID)filesystem_asm_addr)
                     {
-                        ContinueDebugEvent(dbgEvent.dwProcessId, dbgEvent.dwThreadId, dbgFlag);
-                        continue;
+                        CONTEXT ctx1;
+                        ctx1.ContextFlags = CONTEXT_FULL;
+                        GetThreadContext(hThread, &ctx1);
+                        ctx1.EFlags |= 0x10000;
+                        SetThreadContext(hThread, &ctx1);
+
+                        if (ctx1.Eax < 0x100)
+                        {
+                            ContinueDebugEvent(dbgEvent.dwProcessId, dbgEvent.dwThreadId, dbgFlag);
+                            continue;
+                        }
+
+                        wstring tempws(mem->Read<bigstr>(ctx1.Eax).text);
+                        // not safe, will lost data if any word is a non-ascii character
+                        // find a better way to do this!
+                        string filename(tempws.begin(), tempws.end());
+                        if (filename.find("fixtrike/")  != -1 ||
+                            filename.find("lstrike/")   != -1 ||
+                            filename.find("fstrike/")   != -1 ||
+                            filename.find("estrike/")   != -1 ||
+                            filename.find("dstrike/")   != -1 ||
+                            filename.find("cstrike/")   != -1 ||
+                            filename.find("valve/")     != -1)
+                        {
+                            if (filename == "lstrike/locale_chn/resource/item.csv"                  ||
+                                filename == "lstrike/locale_chn/resource/bad_words.csv"             ||
+                                filename == "lstrike/locale_chn/resource/relation_product_ver2.csv" ||
+                                false /* change the list here! */)
+                            {
+                                muted++;
+                                mem->Write(ctx1.Eax, L"null");
+                            }
+
+                            if (filename == "lstrike/common/resource/quest/medalclosed_l.tga")
+                            {
+                                // restore the original function
+                                GetThreadContext(hThread, &ctx);
+                                ctx.Dr0 = 0;
+                                ctx.Dr7 = 0x400;
+                                SetThreadContext(hThread, &ctx);
+                                loop = false;
+                                cout << "游戏已加载完毕, 终止监控...\n";
+                            }
+
+                            //Misc->SetConsoleSize(900, 380);
+                            //cout << filename << "   \t\r" << flush;
+                        }
                     }
-
-                    wstring tempws(mem->Read<bigstr>(ctx1.Eax).text);
-                    // not safe, will lost data if any word is a non-ascii character
-                    // find a better way to do this!
-                    string filename(tempws.begin(), tempws.end());
-                    if (filename.find("fixtrike/")  != -1 ||
-                        filename.find("lstrike/")   != -1 ||
-                        filename.find("fstrike/")   != -1 ||
-                        filename.find("estrike/")   != -1 ||
-                        filename.find("dstrike/")   != -1 ||
-                        filename.find("cstrike/")   != -1 ||
-                        filename.find("valve/")     != -1)
+                    else
                     {
-                        if (filename == "lstrike/locale_chn/resource/item.csv"                  ||
-                            filename == "lstrike/locale_chn/resource/bad_words.csv"             ||
-                            filename == "lstrike/locale_chn/resource/relation_product_ver2.csv" ||
-                            false /* change the list here! */)
-                        {
-                            muted++;
-                            mem->Write(ctx1.Eax, L"null");
-                        }
-
-                        if (filename == "lstrike/common/resource/quest/medalclosed_l.tga")
-                        {
-                            // restore the original function
-                            GetThreadContext(hThread, &ctx);
-                            ctx.Dr0 = 0;
-                            ctx.Dr7 = 0x400;
-                            SetThreadContext(hThread, &ctx);
-                            loop = false;
-                            cout << "游戏已加载完毕, 终止监控...\n";
-                        }
-
-                        //Misc->SetConsoleSize(900, 380);
-                        //cout << filename << "   \t\r" << flush;
+                        dbgFlag = DBG_EXCEPTION_NOT_HANDLED;
                     }
                 }
                 else
                 {
                     dbgFlag = DBG_EXCEPTION_NOT_HANDLED;
                 }
-            }
-            else
-            {
-                dbgFlag = DBG_EXCEPTION_NOT_HANDLED;
-            }
 
-            if (GetAsyncKeyState(VK_DELETE) & 0x8000)
-            {
-                // restore the original function
-                GetThreadContext(hThread, &ctx);
-                ctx.Dr0 = 0;
-                ctx.Dr7 = 0x400;
-                SetThreadContext(hThread, &ctx);
-                loop = false;
-                cout << "已手动按住Del终止监控...\n";
-            }
+                if (GetAsyncKeyState(VK_DELETE) & 0x8000)
+                {
+                    // restore the original function
+                    GetThreadContext(hThread, &ctx);
+                    ctx.Dr0 = 0;
+                    ctx.Dr7 = 0x400;
+                    SetThreadContext(hThread, &ctx);
+                    loop = false;
+                    cout << "已手动按住Del终止监控...\n";
+                }
 
-            ContinueDebugEvent(dbgEvent.dwProcessId, dbgEvent.dwThreadId, dbgFlag);
+                ContinueDebugEvent(dbgEvent.dwProcessId, dbgEvent.dwThreadId, dbgFlag);
+            }
+            SetPriorityClass(mem->m_hProcess, gamepri);
+            DebugActiveProcessStop(mem->m_dwProcessId);
+            CloseHandle(hThread);
+
+            cout << "已屏蔽不应该被加载的 " << muted << " 个文件.\n\n";
         }
-        SetPriorityClass(mem->m_hProcess, gamepri);
-        DebugActiveProcessStop(mem->m_dwProcessId);
-        CloseHandle(hThread);
+    }
 
-        cout << "已屏蔽不应该被加载的 " << muted << " 个文件.\n\n";
-    }
     cout << "操作执行完毕,已加载汉化! :)\nMade by dounai2333(QQ1328600509)\n\n";
-    cout << "程序将在 " << 9 << " 秒后退出." << "\t\r" << flush;
-    for (int i = 8; i >= 0; i--)
+
+    if (Arg->Exist("-autoexit"))
     {
-        Sleep(1000);
-        cout << "程序将在 " << i << " 秒后退出." << "\t\r" << flush;
+        cout << "程序将在 " << 5 << " 秒后退出." << "\t\r" << flush;
+        for (int i = 4; i >= 0; i--)
+        {
+            Sleep(1000);
+            cout << "程序将在 " << i << " 秒后退出." << "\t\r" << flush;
+        }
     }
-    //system("pause");
-    //Sleep(3000);
+    else
+    {
+        cout << "按下任意键关闭汉化程序...\n";
+        system("pause");
+    }
 
     mem->Detach();
     return 0;

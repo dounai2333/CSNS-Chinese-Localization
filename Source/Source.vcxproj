@@ -13,12 +13,14 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Memory\mem.cpp" />
+    <ClCompile Include="Misc\ArgParser.cpp" />
     <ClCompile Include="Misc\Misc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
     <ClInclude Include="Memory\mem.h" />
     <ClInclude Include="Memory\module.h" />
+    <ClInclude Include="Misc\ArgParser.h" />
     <ClInclude Include="Misc\Misc.h" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +99,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
