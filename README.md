@@ -37,7 +37,7 @@ if you want to help me, fork my project, do some changes, then [start a new pull
 
 ### Available arguments
 
-- -dontblock : Don't try to block any file so game can load it normally.
+- -dontblock : Don't try to block any file, let game load them normally.
 
 - -autoexit : Automatically exit the program when everything is done, will wait 5 seconds before exiting.
 
