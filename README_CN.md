@@ -15,7 +15,7 @@
 
 这意味着, 如果你的帐号/密码里有不雅词汇, 你将无法再正常登录你的帐号!
 
-也许你会想试试[具有严重性能问题的1.3试发行版](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3).
+也许你会想试试[具有严重性能问题的1.3.1试发行版](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3.1).
 
 还有我正在寻求帮助以解决性能问题,
 
