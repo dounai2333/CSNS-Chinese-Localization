@@ -92,8 +92,8 @@ int main(int argc, const char* argv[])
         string memfile_missing_list = CheckMemFile();
         if (memfile_missing_list == "")
         {
-            DWORD exitcode = RunMemScanAndGetExitCode(mem->m_dwProcessId, "h", "2F 63 73 74 72 69 6B 65 5F 63 68 6E 2F 72 65 73 6F 75 72 63 65 2F 62 61 63 6B 67 72 6F 75 6E 64 2F 38 30 30 5F 32 5F 63 5F 61 64 76 69 63 65 2E 74 67 61 00 33 00 00 00 33");
-            if ((string)mem->Read<str>(exitcode).text == "/cstrike_chn/resource/background/800_2_c_advice.tga")
+            DWORD exitcode = RunMemScanAndGetExitCode(mem->m_dwProcessId, "h", "2F 63 73 74 72 69 6B 65 5F 63 68 6E 2F 72 65 73 6F 75 72 63 65 2F 62 61 63 6B 67 72 6F 75 6E 64 2F 38 30 30 5F 32 5F 64 5F 61 64 76 69 63 65 2E 74 67 61 00 33 00 00 00 33");
+            if ((string)mem->Read<str>(exitcode).text == "/cstrike_chn/resource/background/800_2_d_advice.tga")
                 resource_addr = exitcode;
             else if (exitcode == 2)
                 cout << "\nnar文件缺失!\n其应被放置在Data内且不得改名!\n\n如果您正在尝试读取非国服的文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
