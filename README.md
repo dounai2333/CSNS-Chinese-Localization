@@ -63,9 +63,13 @@ that cause i cannot have all the memory address i want to get.
 
 There has 2 bugs (or it shouldn't called as bug?) after you use old method:
 
-1. bad_words.csv has been loaded from China client. (example images: [gamemode message has bad word](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg1.jpg), [player name has bad word](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg2.jpg))
+1. bad_words.csv has been loaded from China client.
 
-2. relation_product_ver2.csv has been loaded from China client. (it's shop items list, any item not on this list will be "null" in the shop, example images: [shop](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/shopimg.jpg))
+Function as what it called, Example images: [ZShelter gamemode message has bad word](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg1.jpg), [player name has bad word](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg2.jpg)
+
+2. relation_product_ver2.csv has been loaded from China client.
+
+It's shop items list, any item not on this list will be "null" in the shop, example images: [shop](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/shopimg.jpg)
 
 ‮
 

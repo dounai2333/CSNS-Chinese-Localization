@@ -28,7 +28,7 @@
 
 - -dontblock : 不要尝试阻止任何文件, 让游戏可以正常读取它们.
 
-- -oldblockmethod ([未完成](https://github.com/dounai2333/CSNS-Chinese-Localization#为什么旧的文件阻止方式未完成)) : 使用旧的文件阻止方式, 而不是用新的避免性能浪费.
+- -oldblockmethod ([未完成](https://github.com/dounai2333/CSNS-Chinese-Localization/blob/master/README_CN.md#为什么旧的文件阻止方式未完成)) : 使用旧的文件阻止方式, 而不是用新的避免性能浪费.
 
 - -autoexit : 当一切操作完毕后自动退出程序, 在退出之前会等待5秒钟.
 
@@ -63,9 +63,13 @@
 
 如果你使用旧方式, 你会遇见2个BUG(或不应该将其称为BUG?):
 
-1. 来自国服的bad_word.csv被加载. (示例图片: [昼夜2的模式消息有屏蔽词](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg1.jpg), [玩家名称有屏蔽词](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg2.jpg))
+1. 来自国服的bad_word.csv被加载.
 
-2. 来自国服的relation_product_ver2.csv被加载. (它定义了所有商城的道具, 而未在此列表的道具会被定义为"空", 示例图片: [商店](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/shopimg.jpg))
+用于加载屏蔽词, 示例图片: [昼夜2的模式消息有屏蔽词](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg1.jpg), [玩家名称有屏蔽词](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg2.jpg)
+
+2. 来自国服的relation_product_ver2.csv被加载.
+
+它定义了所有商城的道具, 而未在此列表的道具会被定义为"空", 示例图片: [商店](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/shopimg.jpg)
 
 ‮
 
