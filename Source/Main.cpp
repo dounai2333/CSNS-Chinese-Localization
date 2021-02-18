@@ -105,9 +105,9 @@ int main(int argc, const char* argv[])
             cout << "\n因缺少内存扫描必要文件,已跳过扫描!\n不进行内存扫描可能会导致游戏出现问题!\n缺少文件: " << memfile_missing_list << "\n";
         }
 
+        int muted = 0;
         if (resource_addr != NULL)
         {
-            int muted = 0;
             for (int i = 0; i < 2048; i++)
             {
                 string filename = mem->Read<str>(resource_addr + i * 0x40).text;
@@ -147,7 +147,10 @@ int main(int argc, const char* argv[])
                     mem->Write(resource_addr + i * 0x40, "null");
                 }
             }
+        }
 
+        if (!Arg->Exist("-oldblockmethod"))
+        {
             cout << "开始监控游戏文件读取状态...\n请勿关闭汉化程序! 否则游戏将崩溃!!!\n按住Del键可在游戏加载文件时终止监控\n\n";
 
             // set priority of both to improve performance
@@ -155,7 +158,7 @@ int main(int argc, const char* argv[])
             SetPriorityClass(GetCurrentProcess(), ((thread::hardware_concurrency() >= 4) ? REALTIME_PRIORITY_CLASS : HIGH_PRIORITY_CLASS));
             SetPriorityClass(mem->m_hProcess, HIGH_PRIORITY_CLASS);
 
-        debug: DebugActiveProcess(mem->m_dwProcessId);
+            debug: DebugActiveProcess(mem->m_dwProcessId);
             DebugSetProcessKillOnExit(false);
 
             // compilation, asm context: movzx esi,word ptr [eax]
@@ -271,9 +274,22 @@ int main(int argc, const char* argv[])
             SetPriorityClass(mem->m_hProcess, gamepri);
             DebugActiveProcessStop(mem->m_dwProcessId);
             CloseHandle(hThread);
-
-            cout << "已阻止 " << muted << " 个不应该被加载的文件.\n\n";
         }
+        else
+        {
+            // maybe somedays Item.csv will be rename to item.csv
+            DWORD item = RunMemScanAndGetExitCode(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/item.csv", "utf-16");
+            if (item != 2)
+            {
+                PackerMuteMultiFile(item, "lstrike/locale_chn/resource/item.csv", 0x58);
+                muted++;
+            }
+
+            // Bunsei didn't know how to fix about his MemoryScan program so we can only block item.csv
+            // (never) todo: find a better way to block file without crashing the game
+        }
+
+        cout << "已阻止 " << muted << " 个不应该被加载的文件.\n\n";
     }
 
     cout << "操作执行完毕,已加载汉化! :)\nMade by dounai2333(QQ1328600509)\n\n";
