@@ -28,7 +28,7 @@
 
 - -dontblock : 不要尝试阻止任何文件, 让游戏可以正常读取它们.
 
-- -oldblockmethod ([未完成](https://github.com/dounai2333/CSNS-Chinese-Localization/blob/master/README_CN.md#为什么旧的文件阻止方式未完成)) : 使用旧的文件阻止方式, 而不是用新的避免性能浪费.
+- -oldblockmethod ([未完成](https://github.com/dounai2333/CSNS-Chinese-Localization/blob/master/README_CN.md#为什么旧的文件阻止方式尚未完成)) : 使用旧的文件阻止方式, 而不是用新的避免性能浪费.
 
 - -autoexit : 当一切操作完毕后自动退出程序, 在退出之前会等待5秒钟.
 
