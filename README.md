@@ -1,7 +1,7 @@
 ## Counter-Strike Online (Nexon: Studio / Zombies) Chinese Localization
 
 [![](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
-[![](https://img.shields.io/badge/Release%20Version-1.2-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.2)
+[![](https://img.shields.io/badge/Release%20Version-1.3.2-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3.2)
 [Chinese Readme | 中文说明文档](./README_CN.md)
 
 A localization program that can let CSN:S load the Chinese.
@@ -9,17 +9,6 @@ A localization program that can let CSN:S load the Chinese.
 **This project is current under [MIT license](./LICENSE) and written in C++, build with VS2019.**
 
 - Secondary development and issues / pull requests are always welcome!
-
-### Notice
-Current the Release 1.2 build cannot mute bad_words.csv from chn files anymore!
-
-That means, if your account / password has indecent text, you will not be able to login with your account!
-
-You may want to try [Pre-release 1.3.1 with huge performance issues](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3.1).
-
-Also i'm looking for help to solve about performance issues,
-
-if you want to help me, fork my project, do some changes, then [start a new pull request](https://github.com/dounai2333/CSNS-Chinese-Localization/compare)!
 
 ### How to use?
 1. Make sure your game language is English
@@ -38,6 +27,8 @@ if you want to help me, fork my project, do some changes, then [start a new pull
 ### Available arguments
 
 - -dontblock : Don't try to block any file, let game load them normally.
+
+- -oldblockmethod ([Unfinished](https://github.com/dounai2333/CSNS-Chinese-Localization#why-old-block-method-is-unfinished)) : Use old block method instead of new one, save a lot performance.
 
 - -autoexit : Automatically exit the program when everything is done, will wait 5 seconds before exiting.
 
@@ -59,6 +50,22 @@ Start a [new issue thread here](https://github.com/dounai2333/CSNS-Chinese-Local
 **Please give as much detail as possible!**
 
 **The more detail you gave, the more possibility helps!**
+
+‮
+
+### Why old block method is unfinished?
+
+The old blocking method relies heavily Bunsei's MemoryScan program, but his program has bugs,
+
+that cause i cannot have all the memory address i want to get.
+
+(For example, there have 2 addresses, 0x10000 and 0x1FFFF, the program can only catch the first one)
+
+There has 2 bugs (or it shouldn't called as bug?) after you use old method:
+
+1. bad_words.csv has been loaded from China client. (example images: [gamemode message has bad word](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg1.jpg), [player name has bad word](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg2.jpg))
+
+2. relation_product_ver2.csv has been loaded from China client. (it's shop items list, any item not on this list will be "null" in the shop, example images: [shop](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/shopimg.jpg))
 
 ‮
 

@@ -115,32 +115,32 @@ int main(int argc, const char* argv[])
                     break;
                 filename.replace(filename.begin(), filename.begin() + filename.find("/", 2) + 1, "");
 
-                if (filename == "resource/bad_words.csv"               /*脏话屏蔽列表*/ ||
-                    filename == "resource/item.csv"                    /*游戏里各种道具的定义*/ ||
-                    filename == "resource/relation_product_ver2.csv"   /*商城道具的定义*/ ||
-                    filename == "sound/training/cstrain11.wav"         /*教程关的语音提示*/ ||
-                    filename == "sound/training/cstrain1.wav"          /*(我要听小姐姐!!国服两声提示音爬爬爬)*/ ||
-                    filename == "sound/training/cstrain10.wav" ||
-                    filename == "sound/training/cstrain12.wav" ||
-                    filename == "sound/training/cstrain12a.wav" ||
-                    filename == "sound/training/cstrain13.wav" ||
-                    filename == "sound/training/cstrain15.wav" ||
-                    filename == "sound/training/cstrain16.wav" ||
-                    filename == "sound/training/cstrain17.wav" ||
-                    filename == "sound/training/cstrain18.wav" ||
-                    filename == "sound/training/cstrain19.wav" ||
-                    filename == "sound/training/cstrain2.wav" ||
-                    filename == "sound/training/cstrain2a.wav" ||
-                    filename == "sound/training/cstrain3.wav" ||
-                    filename == "sound/training/cstrain3a.wav" ||
-                    filename == "sound/training/cstrain4.wav" ||
-                    filename == "sound/training/cstrain5.wav" ||
-                    filename == "sound/training/cstrain6.wav" ||
-                    filename == "sound/training/cstrain7.wav" ||
-                    filename == "sound/training/cstrain7a.wav" ||
-                    filename == "sound/training/cstrain8.wav" ||
-                    filename == "sound/training/cstrain9.wav" ||
-                    filename == "sound/training/cstrain9a.wav" ||
+                if (filename == "resource/bad_words.csv"                /*脏话屏蔽列表*/ ||
+                    filename == "resource/item.csv"                     /*游戏里各种道具的定义*/ ||
+                    filename == "resource/relation_product_ver2.csv"    /*商城道具的定义*/ ||
+                    filename == "sound/training/cstrain11.wav"          /*教程关的语音提示*/ ||
+                    filename == "sound/training/cstrain1.wav"           /*(我要听小姐姐!!国服两声提示音爬爬爬)*/ ||
+                    filename == "sound/training/cstrain10.wav"          ||
+                    filename == "sound/training/cstrain12.wav"          ||
+                    filename == "sound/training/cstrain12a.wav"         ||
+                    filename == "sound/training/cstrain13.wav"          ||
+                    filename == "sound/training/cstrain15.wav"          ||
+                    filename == "sound/training/cstrain16.wav"          ||
+                    filename == "sound/training/cstrain17.wav"          ||
+                    filename == "sound/training/cstrain18.wav"          ||
+                    filename == "sound/training/cstrain19.wav"          ||
+                    filename == "sound/training/cstrain2.wav"           ||
+                    filename == "sound/training/cstrain2a.wav"          ||
+                    filename == "sound/training/cstrain3.wav"           ||
+                    filename == "sound/training/cstrain3a.wav"          ||
+                    filename == "sound/training/cstrain4.wav"           ||
+                    filename == "sound/training/cstrain5.wav"           ||
+                    filename == "sound/training/cstrain6.wav"           ||
+                    filename == "sound/training/cstrain7.wav"           ||
+                    filename == "sound/training/cstrain7a.wav"          ||
+                    filename == "sound/training/cstrain8.wav"           ||
+                    filename == "sound/training/cstrain9.wav"           ||
+                    filename == "sound/training/cstrain9a.wav"          ||
                     false /* change the list here! */)
                 {
                     muted++;
@@ -286,7 +286,7 @@ int main(int argc, const char* argv[])
             }
 
             // Bunsei didn't know how to fix about his MemoryScan program so we can only block item.csv
-            // (never) todo: find a better way to block file without crashing the game
+            // (never?) todo: find a better way to block file without crashing the game
         }
 
         cout << "已阻止 " << muted << " 个不应该被加载的文件.\n\n";
