@@ -28,7 +28,7 @@ A localization program that can let CSN:S load the Chinese.
 
 - -dontblock : Don't try to block any file, let game load them normally.
 
-- -oldblockmethod ([Unfinished](https://github.com/dounai2333/CSNS-Chinese-Localization#why-old-block-method-is-unfinished)) : Use old block method instead of new one, save a lot performance.
+- -newblockmethod : Use new block method, prevent random crash but have a lot performance.
 
 - -autoexit : Automatically exit the program when everything is done, will wait 5 seconds before exiting.
 
@@ -50,26 +50,6 @@ Start a [new issue thread here](https://github.com/dounai2333/CSNS-Chinese-Local
 **Please give as much detail as possible!**
 
 **The more detail you gave, the more possibility helps!**
-
-‮
-
-### Why old block method is unfinished?
-
-The old blocking method relies heavily Bunsei's MemoryScan program, but his program has bugs,
-
-that cause i cannot have all the memory address i want to get.
-
-(For example, there have 2 addresses, 0x10000 and 0x1FFFF, the program can only catch the first one)
-
-There has 2 bugs (or it shouldn't called as bug?) after you use old method:
-
-1. bad_words.csv has been loaded from China client.
-
-Function as what it called, Example images: [ZShelter gamemode message has bad word](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg1.jpg), [player name has bad word](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/badwordimg2.jpg)
-
-2. relation_product_ver2.csv has been loaded from China client.
-
-It's shop items list, any item not on this list will be "null" in the shop, example images: [shop](https://raw.githubusercontent.com/dounai2333/CSNS-Chinese-Localization/master/images/shopimg.jpg)
 
 ‮
 

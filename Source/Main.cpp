@@ -365,8 +365,8 @@ void PackerMuteMultiFile(DWORD address, string file, DWORD index, bool safeblock
             }
             else
             {
-                // fu*k C++ [] to *, bugs everywhere
                 // safe way also need safe for codes, bad for looks but work anyway
+                // safe block: upper the first character, simple and working
                 string temp;
                 temp += filename[0];
                 filename[0] = Misc->ToUpper(temp)[0];
