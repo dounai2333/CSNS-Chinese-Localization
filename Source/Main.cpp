@@ -330,11 +330,10 @@ int main(int argc, const char* argv[])
 
     if (Arg->Exist("-autoexit"))
     {
-        cout << "程序将在 " << 5 << " 秒后退出." << "\t\r" << flush;
-        for (int i = 4; i >= 0; i--)
+        for (int i = 5; i >= 1; i--)
         {
-            Sleep(1000);
             cout << "程序将在 " << i << " 秒后退出." << "\t\r" << flush;
+            Sleep(1000);
         }
     }
     else
