@@ -149,7 +149,7 @@ int main(int argc, const char* argv[])
             }
         }
 
-        if (!Arg->Exist("-oldblockmethod"))
+        if (Arg->Exist("-newblockmethod"))
         {
             cout << "开始监控游戏文件读取状态...\n请勿关闭汉化程序! 否则游戏将崩溃!!!\n按住Del键可在游戏加载文件时终止监控\n\n";
 
@@ -161,19 +161,27 @@ int main(int argc, const char* argv[])
             debug: DebugActiveProcess(mem->m_dwProcessId);
             DebugSetProcessKillOnExit(false);
 
-            // compilation, asm context: movzx esi,word ptr [eax]
-            // the eax address is what we want everytime when this asm has been called
-            // if filesysyem_nar.dll get any update then we need to check this
-            DWORD filesystem_asm_addr = filesystem->GetImage() + 0xF4B8;
-
             HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
-            CONTEXT ctx;
-            ctx.ContextFlags = CONTEXT_DEBUG_REGISTERS;
-            GetThreadContext(hThread, &ctx);
-            // set breakpoint on this address
-            ctx.Dr0 = filesystem_asm_addr;
-            ctx.Dr7 = 1;
-            SetThreadContext(hThread, &ctx);
+
+            // compilation, asm context:
+            // UTF-8: mov dl,[esi+eax]
+            // UTF-16: movzx esi,word ptr [eax]
+            //DWORD filesystem_asm_utf8_addr = filesystem->GetImage() + find_ptr(filesystem, "8A 14 06 8A 18 3A D3 75 08 41 40 3B CF 72 F1", 0, 0, true, false);
+            DWORD filesystem_asm_utf16_addr = filesystem->GetImage() + find_ptr(filesystem, "? ? 14 07 ? ? 30 66 3B D6 75 0E 83 C0 02 83 E9 01 75 EC", 0, 0, true, false);
+            /*
+            CONTEXT ctx_utf8;
+            ctx_utf8.ContextFlags = CONTEXT_DEBUG_REGISTERS;
+            GetThreadContext(hThread, &ctx_utf8);
+            ctx_utf8.Dr0 = filesystem_asm_utf8_addr;
+            ctx_utf8.Dr7 = 1;
+            SetThreadContext(hThread, &ctx_utf8);
+            */
+            CONTEXT ctx_utf16;
+            ctx_utf16.ContextFlags = CONTEXT_DEBUG_REGISTERS;
+            GetThreadContext(hThread, &ctx_utf16);
+            ctx_utf16.Dr0 = filesystem_asm_utf16_addr;
+            ctx_utf16.Dr7 = 1;
+            SetThreadContext(hThread, &ctx_utf16);
 
             DEBUG_EVENT dbgEvent;
             DWORD dbgFlag = DBG_CONTINUE;
@@ -198,7 +206,7 @@ int main(int argc, const char* argv[])
 
                 if (dbgEvent.dwDebugEventCode == EXCEPTION_DEBUG_EVENT && dbgEvent.u.Exception.ExceptionRecord.ExceptionCode == EXCEPTION_SINGLE_STEP)
                 {
-                    if (dbgEvent.u.Exception.ExceptionRecord.ExceptionAddress == (LPVOID)filesystem_asm_addr)
+                    if (dbgEvent.u.Exception.ExceptionRecord.ExceptionAddress == (LPVOID)filesystem_asm_utf16_addr)
                     {
                         CONTEXT ctx1;
                         ctx1.ContextFlags = CONTEXT_FULL;
@@ -236,10 +244,10 @@ int main(int argc, const char* argv[])
                             if (filename == "lstrike/common/resource/quest/medalclosed_l.tga")
                             {
                                 // restore the original function
-                                GetThreadContext(hThread, &ctx);
-                                ctx.Dr0 = 0;
-                                ctx.Dr7 = 0x400;
-                                SetThreadContext(hThread, &ctx);
+                                GetThreadContext(hThread, &ctx_utf16);
+                                ctx_utf16.Dr0 = 0;
+                                ctx_utf16.Dr7 = 0x400;
+                                SetThreadContext(hThread, &ctx_utf16);
                                 loop = false;
                                 cout << "游戏已加载完毕, 终止监控...\n";
                             }
@@ -261,10 +269,10 @@ int main(int argc, const char* argv[])
                 if (GetAsyncKeyState(VK_DELETE) & 0x8000)
                 {
                     // restore the original function
-                    GetThreadContext(hThread, &ctx);
-                    ctx.Dr0 = 0;
-                    ctx.Dr7 = 0x400;
-                    SetThreadContext(hThread, &ctx);
+                    GetThreadContext(hThread, &ctx_utf16);
+                    ctx_utf16.Dr0 = 0;
+                    ctx_utf16.Dr7 = 0x400;
+                    SetThreadContext(hThread, &ctx_utf16);
                     loop = false;
                     cout << "已手动按住Del终止监控...\n";
                 }
@@ -277,16 +285,41 @@ int main(int argc, const char* argv[])
         }
         else
         {
-            // maybe somedays Item.csv will be rename to item.csv
-            DWORD item = RunMemScanAndGetExitCode(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/item.csv", "utf-16");
-            if (item != 2)
+            // 经 典 复 刻
+            DWORD addresses[CHAR_MAX];
+            for (int i = 0; i < CHAR_MAX; i++)
+                addresses[i] = NULL;
+            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/item.csv", addresses, "utf-16");
+            for (int i = 0; i < CHAR_MAX; i++)
             {
-                PackerMuteMultiFile(item, "lstrike/locale_chn/resource/item.csv", 0x58);
-                muted++;
+                if (addresses[i] == NULL)
+                    break;
+                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/item.csv", 0x58, true);
+                if (i == 0)
+                    muted++;
             }
-
-            // Bunsei didn't know how to fix about his MemoryScan program so we can only block item.csv
-            // (never?) todo: find a better way to block file without crashing the game
+            for (int i = 0; i < CHAR_MAX; i++)
+                addresses[i] = NULL;
+            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/bad_words.csv", addresses, "utf-16");
+            for (int i = 0; i < CHAR_MAX; i++)
+            {
+                if (addresses[i] == NULL)
+                    break;
+                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/bad_words.csv", 0x68, true);
+                if (i == 0)
+                    muted++;
+            }
+            for (int i = 0; i < CHAR_MAX; i++)
+                addresses[i] = NULL;
+            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/relation_product_ver2.csv", addresses, "utf-16");
+            for (int i = 0; i < CHAR_MAX; i++)
+            {
+                if (addresses[i] == NULL)
+                    break;
+                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/relation_product_ver2.csv", 0x78, true);
+                if (i == 0)
+                    muted++;
+            }
         }
 
         cout << "已阻止 " << muted << " 个不应该被加载的文件.\n\n";
@@ -312,7 +345,7 @@ int main(int argc, const char* argv[])
     return 0;
 }
 
-void PackerMuteMultiFile(DWORD address, string file, DWORD index)
+void PackerMuteMultiFile(DWORD address, string file, DWORD index, bool safeblock)
 {
     DWORD addr = address - index * mem->Read<byte>(address - 3);
     for (int i = 0; i < 0xFF; i++)
@@ -325,8 +358,41 @@ void PackerMuteMultiFile(DWORD address, string file, DWORD index)
             continue; // we don't break because some info is encrypted and it will cause problem
 
         if (filename == file)
-            mem->Write(addr + index * i, L"null");
+        {
+            if (!safeblock)
+            {
+                mem->Write(addr + index * i, L"null");
+            }
+            else
+            {
+                // fu*k C++ [] to *, bugs everywhere
+                // safe way also need safe for codes, bad for looks but work anyway
+                string temp;
+                temp += filename[0];
+                filename[0] = Misc->ToUpper(temp)[0];
+
+                byte utf16text[2048];
+                int count = UTF8ASCIIToUTF16Array(filename, utf16text, true);
+                for (int j= 0; j < count; j++)
+                    mem->Write<byte>(addr + index * i + j, utf16text[j]);
+            }
+        }
     }
+}
+
+int UTF8ASCIIToUTF16Array(string text, byte(&output)[2048], bool zeroend)
+{
+    int index = (zeroend ? text.length() * 2 + 1 : text.length() * 2);
+    bool writezero = false;
+    for (int i = 0; i < index; i++)
+    {
+        if (writezero)
+            output[i] = 0;
+        else
+            output[i] = (int)text[((i != 0) ? (i / 2) : i)];
+        writezero = !writezero;
+    }
+    return index;
 }
 
 string CheckMemFile()
