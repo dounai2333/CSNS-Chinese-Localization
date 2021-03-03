@@ -1,7 +1,7 @@
 ## Counter-Strike Online (Nexon: Studio / Zombies) 汉化工具
 
 [![](https://img.shields.io/badge/许可证-MIT-green)](./LICENSE_CN)
-[![](https://img.shields.io/badge/发行版版本-1.3.2-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3.2)
+[![](https://img.shields.io/badge/发行版版本-1.3.3-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3.3)
 [English Readme](./README.md)
 
 一个简易的汉化程序能让CSN:S使用汉语.
