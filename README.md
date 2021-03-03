@@ -10,6 +10,8 @@ A localization program that can let CSN:S load the Chinese.
 
 - Secondary development and issues / pull requests are always welcome!
 
+**If your game crashes after game logo show up, just restart your game and try again. You just hited a rare bugs so don't worry.**
+
 ### How to use?
 1. Make sure your game language is English
 2. Get cstrike_chn.nar from CSO China client
