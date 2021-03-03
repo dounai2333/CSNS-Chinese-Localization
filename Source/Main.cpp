@@ -369,7 +369,7 @@ void PackerMuteMultiFile(DWORD address, string file, DWORD index, bool safeblock
                 string temp;
                 temp += filename[0];
                 filename[0] = Misc->ToUpper(temp)[0];
-                mem->Write<byte>(addr + index * i, (int)filename[0]);
+                mem->Write<byte>(addr + index * i, filename[0]);
 
                 /* // why i wrote this unnecessary sh*t?
                 byte utf16text[2048];
