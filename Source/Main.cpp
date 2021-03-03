@@ -365,16 +365,18 @@ void PackerMuteMultiFile(DWORD address, string file, DWORD index, bool safeblock
             }
             else
             {
-                // safe way also need safe for codes, bad for looks but work anyway
                 // safe block: upper the first character, simple and working
                 string temp;
                 temp += filename[0];
                 filename[0] = Misc->ToUpper(temp)[0];
+                mem->Write<byte>(addr + index * i, (int)filename[0]);
 
+                /* // why i wrote this unnecessary sh*t?
                 byte utf16text[2048];
                 int count = UTF8ASCIIToUTF16Array(filename, utf16text, true);
                 for (int j= 0; j < count; j++)
                     mem->Write<byte>(addr + index * i + j, utf16text[j]);
+                */
             }
         }
     }

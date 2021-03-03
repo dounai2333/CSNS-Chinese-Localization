@@ -30,7 +30,7 @@ A localization program that can let CSN:S load the Chinese.
 
 - -newblockmethod : Use new block method, prevent random crash **but have a lot performance issues**.
 
-- -autoexit : Automatically exit the program when everything is done, will wait 5 seconds before exiting.
+- -autoexit : Automatically exit the program after everything is done, will wait 5 seconds before exiting.
 
 ### Will I be banned for using this on Steam server?
 Will, most likely **YES**.
