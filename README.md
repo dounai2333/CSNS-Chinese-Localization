@@ -28,7 +28,7 @@ A localization program that can let CSN:S load the Chinese.
 
 - -dontblock : Don't try to block any file, let game load them normally.
 
-- -newblockmethod : Use new block method, prevent random crash but have a lot performance.
+- -newblockmethod : Use new block method, prevent random crash but have a lot performance issues.
 
 - -autoexit : Automatically exit the program when everything is done, will wait 5 seconds before exiting.
 
