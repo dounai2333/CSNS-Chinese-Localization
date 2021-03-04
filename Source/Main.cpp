@@ -88,8 +88,8 @@ int main(int argc, const char* argv[])
 
     if (!Arg->Exist("-dontblock"))
     {
-        // pause the main thread so we can do everything without trouble
-        HANDLE handle_t = OpenThread(THREAD_ALL_ACCESS, NULL, mem->GetThreadById(mem->m_dwProcessId));
+        // pause the main thread so we can do the memory scan without trouble
+        HANDLE handle_t = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
         SuspendThread(handle_t);
 
         DWORD resource_addr = NULL;
