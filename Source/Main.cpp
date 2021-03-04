@@ -88,6 +88,10 @@ int main(int argc, const char* argv[])
 
     if (!Arg->Exist("-dontblock"))
     {
+        // pause the main thread so we can do everything without trouble
+        HANDLE handle_t = OpenThread(THREAD_ALL_ACCESS, NULL, mem->GetThreadById(mem->m_dwProcessId));
+        SuspendThread(handle_t);
+
         DWORD resource_addr = NULL;
         string memfile_missing_list = CheckMemFile();
         if (memfile_missing_list == "")
@@ -151,6 +155,10 @@ int main(int argc, const char* argv[])
 
         if (Arg->Exist("-newblockmethod"))
         {
+            // resume the main thread because we need to debug now
+            ResumeThread(handle_t);
+            CloseHandle(handle_t);
+
             cout << "开始监控游戏文件读取状态...\n请勿关闭汉化程序! 否则游戏将崩溃!!!\n按住Del键可在游戏加载文件时终止监控\n\n";
 
             // set priority of both to improve performance
@@ -320,6 +328,10 @@ int main(int argc, const char* argv[])
                 if (i == 0)
                     muted++;
             }
+
+            // resume the main thread because everything is done
+            ResumeThread(handle_t);
+            CloseHandle(handle_t);
         }
 
         cout << "已阻止 " << muted << " 个不应该被加载的文件.\n\n";
