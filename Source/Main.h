@@ -41,8 +41,6 @@ using std::cout;
 using std::string;
 
 void PackerMuteMultiFile(DWORD address, string file, DWORD index, bool safeblock = true);
-// text: ASCII only! (0-127)
-int UTF8ASCIIToUTF16Array(string text, byte(&output)[2048], bool zeroend);
 string CheckMemFile();
 // Type: i8 ui8 i16 i32 i64 ui16 ui32 ui64 fs fd s h c b
 // most type is untested (because I don't need it), so take care when use them!

@@ -379,33 +379,11 @@ void PackerMuteMultiFile(DWORD address, string file, DWORD index, bool safeblock
                 // safe block: upper the first character, simple and working
                 string temp;
                 temp += filename[0];
-                filename[0] = Misc->ToUpper(temp)[0];
-                mem->Write<byte>(addr + index * i, filename[0]);
-
-                /* // why i wrote this unnecessary sh*t?
-                byte utf16text[2048];
-                int count = UTF8ASCIIToUTF16Array(filename, utf16text, true);
-                for (int j= 0; j < count; j++)
-                    mem->Write<byte>(addr + index * i + j, utf16text[j]);
-                */
+                temp = Misc->ToUpper(temp);
+                mem->Write<byte>(addr + index * i, temp[0]);
             }
         }
     }
-}
-
-int UTF8ASCIIToUTF16Array(string text, byte(&output)[2048], bool zeroend)
-{
-    int index = (zeroend ? text.length() * 2 + 1 : text.length() * 2);
-    bool writezero = false;
-    for (int i = 0; i < index; i++)
-    {
-        if (writezero)
-            output[i] = 0;
-        else
-            output[i] = (int)text[((i != 0) ? (i / 2) : i)];
-        writezero = !writezero;
-    }
-    return index;
 }
 
 string CheckMemFile()
