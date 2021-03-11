@@ -29,7 +29,7 @@ class MiscFunc
 {
 public:
 	void SetConsoleCursor( bool cursor );
-	void CloseConsoleQuickEdit();
+	void DisableConsoleQuickEdit();
 	void SetConsoleColor( concol textColor, concol bgColor );
 	void ConsoleClear();
 	int  ReadKey();

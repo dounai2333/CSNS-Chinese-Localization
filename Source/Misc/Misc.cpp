@@ -10,7 +10,7 @@ void MiscFunc::SetConsoleCursor( bool cursor )
 	SetConsoleCursorInfo( GetStdHandle( STD_OUTPUT_HANDLE ), &curCursorInfo );
 }
 
-void MiscFunc::CloseConsoleQuickEdit()
+void MiscFunc::DisableConsoleQuickEdit()
 {
 	HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
 	DWORD mode;
@@ -28,8 +28,7 @@ void MiscFunc::SetConsoleColor( concol textColor, concol bgColor )
 void MiscFunc::ConsoleClear()
 {
 	system("cls");
-	// why we need this?
-	/*
+	/* // why we need this?
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	HANDLE hStdOut;
 	DWORD count;
@@ -223,9 +222,9 @@ int MiscFunc::GetKeyFromString( std::string str )
 	else if (str == "/") return VK_OEM_2;
 	else if (str == "~") return VK_OEM_3;
 	else if (str == "[") return VK_OEM_4;
-	else if (str == std::to_string(char(0x5C))) return VK_OEM_5;
+	else if (str == "\\") return VK_OEM_5;
 	else if (str == "]") return VK_OEM_6;
-	else if (str == std::to_string(char(0x22))) return VK_OEM_7;
+	else if (str == "\"") return VK_OEM_7;
 	else return -1;
 
 }
@@ -302,9 +301,9 @@ std::string MiscFunc::GetStringFromKey(int key)
 	case VK_OEM_2: return std::string("/");
 	case VK_OEM_3: return std::string("~");
 	case VK_OEM_4: return std::string("[");
-	case VK_OEM_5: return std::to_string(char(0x5C));
+	case VK_OEM_5: return std::string("\\");
 	case VK_OEM_6: return std::string("]");
-	case VK_OEM_7: return std::to_string(char(0x22));
+	case VK_OEM_7: return std::string("\"");
 	default: return std::string("unknown key");
 	}
 }

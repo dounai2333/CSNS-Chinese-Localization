@@ -3,7 +3,7 @@
 int main(int argc, const char* argv[])
 {
     SetConsoleTitle("CSN:S汉化程序");
-    Misc->CloseConsoleQuickEdit();
+    Misc->DisableConsoleQuickEdit();
     Misc->SetConsoleSize(370, 380);
     Misc->SetConsoleCursor(false);
     //Misc->SetConsoleEncoding(CP_UTF8);
@@ -379,8 +379,7 @@ void PackerMuteMultiFile(DWORD address, string file, DWORD index, bool safeblock
                 // safe block: upper the first character, simple and working
                 string temp;
                 temp += filename[0];
-                temp = Misc->ToUpper(temp);
-                mem->Write<byte>(addr + index * i, temp[0]);
+                mem->Write<byte>(addr + index * i, Misc->ToUpper(temp)[0]);
             }
         }
     }
