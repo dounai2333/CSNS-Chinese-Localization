@@ -77,6 +77,9 @@ int main(int argc, const char* argv[])
         exit(-1);
     }
 
+    // todo: do custom languages support ("-language tw/koreana", done todo below there first!)
+    // must find a better option to write memory without using loop and writing byte (no performance waste!)
+
     mem->Write(cstrike_na_en_addr, "/cstrike_chn/");
     cout << "国服nar重定向已完成\n";
 
@@ -171,6 +174,8 @@ int main(int argc, const char* argv[])
 
             HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
 
+            // todo: add utf8 asm to the new block method and disable memory scan of resource if user are using new one
+
             // compilation, asm context:
             // UTF-8: mov dl,[esi+eax]
             // UTF-16: movzx esi,word ptr [eax]
@@ -232,37 +237,31 @@ int main(int argc, const char* argv[])
                         // not safe, will lost data if any word is a non-ascii character
                         // find a better way to do this!
                         string filename(tempws.begin(), tempws.end());
-                        if (filename.find("fixtrike/")  != -1 ||
-                            filename.find("lstrike/")   != -1 ||
-                            filename.find("fstrike/")   != -1 ||
-                            filename.find("estrike/")   != -1 ||
-                            filename.find("dstrike/")   != -1 ||
-                            filename.find("cstrike/")   != -1 ||
-                            filename.find("valve/")     != -1)
+                        if (filename.find("trike/") == -1)
+                            continue;
+
+                        if (filename == "lstrike/locale_chn/resource/item.csv" ||
+                            filename == "lstrike/locale_chn/resource/bad_words.csv" ||
+                            filename == "lstrike/locale_chn/resource/relation_product_ver2.csv" ||
+                            false /* change the list here! */)
                         {
-                            if (filename == "lstrike/locale_chn/resource/item.csv"                  ||
-                                filename == "lstrike/locale_chn/resource/bad_words.csv"             ||
-                                filename == "lstrike/locale_chn/resource/relation_product_ver2.csv" ||
-                                false /* change the list here! */)
-                            {
-                                muted++;
-                                mem->Write(ctx1.Eax, L"null");
-                            }
-
-                            if (filename == "lstrike/common/resource/quest/medalclosed_l.tga")
-                            {
-                                // restore the original function
-                                GetThreadContext(hThread, &ctx_utf16);
-                                ctx_utf16.Dr0 = 0;
-                                ctx_utf16.Dr7 = 0x400;
-                                SetThreadContext(hThread, &ctx_utf16);
-                                loop = false;
-                                cout << "游戏已加载完毕, 终止监控...\n";
-                            }
-
-                            //Misc->SetConsoleSize(900, 380);
-                            //cout << filename << "   \t\r" << flush;
+                            muted++;
+                            mem->Write(ctx1.Eax, L"null");
                         }
+
+                        if (filename == "lstrike/common/resource/quest/medalclosed_l.tga")
+                        {
+                            // restore the original function
+                            GetThreadContext(hThread, &ctx_utf16);
+                            ctx_utf16.Dr0 = 0;
+                            ctx_utf16.Dr7 = 0x400;
+                            SetThreadContext(hThread, &ctx_utf16);
+                            loop = false;
+                            cout << "游戏已加载完毕, 终止监控...\n";
+                        }
+                        
+                        //Misc->SetConsoleSize(900, 380);
+                        //cout << filename << "   \t\r" << flush;
                     }
                     else
                     {
@@ -432,7 +431,7 @@ void RunMemScanAndGetAllAddress(DWORD ProcessID, string Type, string Value, DWOR
     system(strtemp.c_str());
 
     ifstream file(string(getenv("TEMP")) + "\\address.log");
-    if (file.good())
+    if (file.is_open())
     {
         int index = 0;
         for (std::string line; getline(file, line); )
@@ -441,20 +440,7 @@ void RunMemScanAndGetAllAddress(DWORD ProcessID, string Type, string Value, DWOR
             index++;
         }
         file.close();
-        if (output[0] != NULL)
-        {
-            STARTUPINFO si;
-            PROCESS_INFORMATION pi;
-            ZeroMemory(&si, sizeof(si));
-            si.cb = sizeof(si);
-            ZeroMemory(&pi, sizeof(pi));
-            string strtemp1 = "cmd /c \"del /s /q %temp%\\address.log\"";
-            LPSTR start_str = strdup(strtemp1.c_str());
-            if (CreateProcess(NULL, start_str, NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi))
-            {
-                CloseHandle(pi.hProcess);
-                CloseHandle(pi.hThread);
-            }
-        }
+        
+        system("del /q %temp%\\address.log");
     }
 }
