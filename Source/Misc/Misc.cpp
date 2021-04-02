@@ -27,8 +27,6 @@ void MiscFunc::SetConsoleColor( concol textColor, concol bgColor )
 
 void MiscFunc::ConsoleClear()
 {
-	system("cls");
-	/* // why we need this?
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	HANDLE hStdOut;
 	DWORD count;
@@ -47,7 +45,6 @@ void MiscFunc::ConsoleClear()
 	if( !FillConsoleOutputAttribute( hStdOut, csbi.wAttributes, cellCount, homeCoords, &count ) )
 		return;
 	SetConsoleCursorPosition( hStdOut, homeCoords );
-	*/
 }
 
 int MiscFunc::ReadKey()

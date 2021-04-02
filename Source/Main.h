@@ -46,6 +46,7 @@ string CheckMemFile();
 // most type is untested (because I don't need it), so take care when use them!
 DWORD RunMemScanAndGetExitCode(DWORD ProcessID, string Type, string Value, string Encoding = "utf-8");
 void RunMemScanAndGetAllAddress(DWORD ProcessID, string Type, string Value, DWORD (&output)[CHAR_MAX], string Encoding = "utf-8");
+void Exit(int exitcode);
 
 static auto find_ptr = [](Module* mod, const char* sig, DWORD sig_add = NULL, DWORD off_add = NULL, bool sub_base = true, bool doubleread = true) -> DWORD
 {

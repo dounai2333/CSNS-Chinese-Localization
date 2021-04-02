@@ -1,6 +1,6 @@
 ﻿#include "Main.h"
 
-int main(int argc, const char* argv[])
+void main(int argc, const char* argv[])
 {
     SetConsoleTitle("CSN:S汉化程序");
     Misc->DisableConsoleQuickEdit();
@@ -24,8 +24,7 @@ int main(int argc, const char* argv[])
              <<"- 如提示\"error TS6,1 (GetLastError 0x20)\"\n"
              <<"-- 无视并点击确定即可，提示2次后正常游戏\n\n"
              <<"Made by dounai2333 (QQ1328600509)\n\n\n";
-        system("pause");
-        exit(1);
+        Exit(1);
     }
 
     cout <<"cstrike-online.exe (PID: "<< mem->m_dwProcessId << ") attached.\n"
@@ -38,10 +37,9 @@ int main(int argc, const char* argv[])
 
     if (mem->GetModule("mp.dll"))
     {
-        system("cls");
+        Misc->ConsoleClear();
         cout << "游戏已完成加载!开启此程序不会生效!\n请确保在反作弊加载时再运行!\n\n";
-        system("pause");
-        exit(-1);
+        Exit(2);
     }
 
     // string, original content: /cstrike_na_en/ (if user's game language isn't English, na_en will be others like na_ru etc...)
@@ -64,17 +62,15 @@ int main(int argc, const char* argv[])
 
     if (cstrike_na_en_addr_text == "/cstrike_chn/" && lstrike_na_en_addr_text == "/lstrike/locale_chn/" && lang_addr_text == "chn")
     {
-        system("cls");
+        Misc->ConsoleClear();
         cout << "请勿重复操作!待游戏加载完毕后即可加载汉化\n";
-        system("pause");
-        exit(0);
+        Exit(0);
     }
     else if (cstrike_na_en_addr_text != "/cstrike_na_en/" || lstrike_na_en_addr_text != "/lstrike/locale_na_en/" || lang_addr_text != "na_en")
     {
-        system("cls");
+        Misc->ConsoleClear();
         cout << "检测到非法内容,可能由于游戏更新基址已过期\n\n如果您的游戏语言不是英语,\n请修改为英语后重试!\n";
-        system("pause");
-        exit(-1);
+        Exit(1);
     }
 
     // todo: do custom languages support ("-language tw/koreana", done todo below there first!)
@@ -337,22 +333,7 @@ int main(int argc, const char* argv[])
     }
 
     cout << "操作执行完毕,已加载汉化! :)\nMade by dounai2333(QQ1328600509)\n\n";
-    mem->Detach();
-
-    if (Arg->Exist("-autoexit"))
-    {
-        for (int i = 5; i >= 1; i--)
-        {
-            cout << "程序将在 " << i << " 秒后退出." << "\t\r" << flush;
-            Sleep(1000);
-        }
-    }
-    else
-    {
-        cout << "按下任意键关闭汉化程序...\n";
-        system("pause");
-    }
-    return 0;
+    Exit(0);
 }
 
 void PackerMuteMultiFile(DWORD address, string file, DWORD index, bool safeblock)
@@ -443,4 +424,24 @@ void RunMemScanAndGetAllAddress(DWORD ProcessID, string Type, string Value, DWOR
         
         system("del /q %temp%\\address.log");
     }
+}
+
+void Exit(int exitcode)
+{
+    mem->Detach();
+
+    if (Arg->Exist("-autoexit"))
+    {
+        for (int i = 5; i >= 1; i--)
+        {
+            cout << "程序将在 " << i << " 秒后退出." << "\t\r" << flush;
+            Sleep(1000);
+        }
+    }
+    else
+    {
+        cout << "按下任意键关闭汉化程序...\n";
+        system("pause");
+    }
+    exit(exitcode);
 }
