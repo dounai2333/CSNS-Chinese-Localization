@@ -13,17 +13,14 @@ void main(int argc, const char* argv[])
 
     if (!mem->Attach("cstrike-online.exe"))
     {
-        cout <<"cstrike-online.exe 未启动...\n"
-             <<"请在右下角加载N社反作弊时开启此程序\n\n"
-             <<"以下是使用须知和温馨提醒：\n"
-             <<"- 请确保带启动项\"-disableauthui\"\n"
-             <<"--推荐同时使用-login和-password\n"
-             <<"-- -login 你的帐号 -password 你的密码\n\n"
-             <<"- 不保证绝对不会出现程序BUG\n"
-             <<"- 不保证游戏数次更新后仍可用\n\n"
-             <<"- 如提示\"error TS6,1 (GetLastError 0x20)\"\n"
-             <<"-- 无视并点击确定即可，提示2次后正常游戏\n\n"
-             <<"Made by dounai2333 (QQ1328600509)\n\n\n";
+        cout << "cstrike-online.exe 未启动...\n"
+             << "请在右下角加载N社反作弊时开启此程序!\n\n"
+             << "请注意以下事项：\n"
+             << "- 如字体变宋体或异常请安装华康圆体W9\n"
+             << "- 不保证绝对不会出现程序BUG\n"
+             << "- 不保证游戏数次更新后仍可用\n\n"
+             <<"Made by dounai2333 (QQ1328600509)\n"
+             <<"二次开发: github.com/dounai2333\n\n";
         Exit(1);
     }
 
@@ -41,6 +38,9 @@ void main(int argc, const char* argv[])
         cout << "游戏已完成加载!开启此程序不会生效!\n请确保在反作弊加载时再运行!\n\n";
         Exit(2);
     }
+
+    if (Arg->Exist("-killac"))
+        system("taskkill /f /im BlackXchg.aes >nul");
 
     // string, original content: /cstrike_na_en/ (if user's game language isn't English, na_en will be others like na_ru etc...)
     // if filesysyem_nar.dll get any update then we need to check this
@@ -240,6 +240,7 @@ void main(int argc, const char* argv[])
                         if (filename == "lstrike/locale_chn/resource/item.csv" ||
                             filename == "lstrike/locale_chn/resource/bad_words.csv" ||
                             filename == "lstrike/locale_chn/resource/relation_product_ver2.csv" ||
+                            filename == "lstrike/locale_chn/resource/res/popup_login.res" ||
                             false /* change the list here! */)
                         {
                             muted++;
@@ -453,7 +454,7 @@ void Exit(int exitcode)
     else
     {
         cout << "按下任意键关闭汉化程序...\n";
-        system("pause");
+        Misc->ReadKey();
     }
     exit(exitcode);
 }
