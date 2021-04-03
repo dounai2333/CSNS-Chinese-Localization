@@ -121,7 +121,7 @@ void main(int argc, const char* argv[])
                 if (filename == "resource/bad_words.csv"                /*脏话屏蔽列表*/ ||
                     filename == "resource/item.csv"                     /*游戏里各种道具的定义*/ ||
                     filename == "resource/relation_product_ver2.csv"    /*商城道具的定义*/ ||
-                    filename == "resource/res/popup_login.res"          /*登录UI 避免报错*/ ||
+                    filename == "resource/res/popup_login.res"          /*登录UI*/ ||
                     filename == "sound/training/cstrain11.wav"          /*教程关的语音提示*/ ||
                     filename == "sound/training/cstrain1.wav"           /*(我要听小姐姐!!国服两声提示音爬爬爬)*/ ||
                     filename == "sound/training/cstrain10.wav"          ||
@@ -321,6 +321,17 @@ void main(int argc, const char* argv[])
                 if (addresses[i] == NULL)
                     break;
                 PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/relation_product_ver2.csv", 0x78, true);
+                if (i == 0)
+                    muted++;
+            }
+            for (int i = 0; i < CHAR_MAX; i++)
+                addresses[i] = NULL;
+            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/res/popup_login.res", addresses, "utf-16");
+            for (int i = 0; i < CHAR_MAX; i++)
+            {
+                if (addresses[i] == NULL)
+                    break;
+                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/res/popup_login.res", 0x68, true);
                 if (i == 0)
                     muted++;
             }
