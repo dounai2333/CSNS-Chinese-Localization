@@ -121,6 +121,7 @@ void main(int argc, const char* argv[])
                 if (filename == "resource/bad_words.csv"                /*脏话屏蔽列表*/ ||
                     filename == "resource/item.csv"                     /*游戏里各种道具的定义*/ ||
                     filename == "resource/relation_product_ver2.csv"    /*商城道具的定义*/ ||
+                    filename == "resource/res/popup_login.res"          /*登录UI 避免报错*/ ||
                     filename == "sound/training/cstrain11.wav"          /*教程关的语音提示*/ ||
                     filename == "sound/training/cstrain1.wav"           /*(我要听小姐姐!!国服两声提示音爬爬爬)*/ ||
                     filename == "sound/training/cstrain10.wav"          ||
