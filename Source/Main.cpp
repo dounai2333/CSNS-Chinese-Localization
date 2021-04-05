@@ -73,9 +73,6 @@ void main(int argc, const char* argv[])
         Exit(1);
     }
 
-    // todo: do custom languages support ("-language tw/koreana", done todo below there first!)
-    // must find a better option to write memory without using loop and writing byte (no performance waste!)
-
     mem->Write(cstrike_na_en_addr, "/cstrike_chn/");
     cout << "国服nar重定向已完成\n";
 
