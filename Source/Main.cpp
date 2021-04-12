@@ -84,28 +84,38 @@ void main(int argc, const char* argv[])
 
     if (!Arg->Exist("-dontblock"))
     {
+        int muted = 0;
         // pause the main thread so we can do the memory scan without trouble
-        HANDLE handle_t = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
-        SuspendThread(handle_t);
+        HANDLE handle_thread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
+        SuspendThread(handle_thread);
 
+        bool pakexist = false;
         DWORD resource_addr = NULL;
         string memfile_missing_list = CheckMemFile();
         if (memfile_missing_list == "")
         {
-            DWORD exitcode = RunMemScanAndGetExitCode(mem->m_dwProcessId, "h", "2F 63 73 74 72 69 6B 65 5F 63 68 6E 2F 72 65 73 6F 75 72 63 65 2F 62 61 63 6B 67 72 6F 75 6E 64 2F 38 30 30 5F 32 5F 64 5F 61 64 76 69 63 65 2E 74 67 61 00 33 00 00 00 33");
-            if ((string)mem->Read<str>(exitcode).text == "/cstrike_chn/resource/background/800_2_d_advice.tga")
-                resource_addr = exitcode;
-            else if (exitcode == 2)
+            DWORD resource_base_addr = RunMemScanAndGetExitCode(mem->m_dwProcessId, "h", "2F 63 73 74 72 69 6B 65 5F 63 68 6E 2F 72 65 73 6F 75 72 63 65 2F 62 61 63 6B 67 72 6F 75 6E 64 2F 38 30 30 5F 32 5F 64 5F 61 64 76 69 63 65 2E 74 67 61 00 33 00 00 00 33");
+            if ((string)mem->Read<str>(resource_base_addr).text == "/cstrike_chn/resource/background/800_2_d_advice.tga")
+                resource_addr = resource_base_addr;
+            else if (resource_base_addr == 2)
                 cout << "\nnar文件缺失!\n其应被放置在Data内且不得改名!\n\n如果您正在尝试读取非国服的文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
             else
-                cout << "\n内存扫描出现意外错误!已跳过扫描!\n返回数值: " << Misc->DecimalToHex(exitcode, true) << "\n";
+                cout << "\n内存扫描出现意外错误!已跳过扫描!\n返回数值: " << Misc->DecimalToHex(resource_base_addr, true) << "\n";
+            DWORD pak_file_addr = RunMemScanAndGetExitCode(mem->m_dwProcessId, "s", "./\\../Data/Packer/chn_00000.pak", "utf-16");
+            wstring wstemp = mem->Read<bigstr>(pak_file_addr).text;
+            string pak_string(wstemp.begin(), wstemp.end());
+            if (pak_string == "./\\../Data/Packer/chn_00000.pak")
+                pakexist = true;
+            else if (pak_file_addr == 2)
+                cout << "\npak文件缺失!\n其应被放置在Data/Packer内且不得改名!\n\n如果您正在尝试读取非国服的文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
+            else
+                cout << "\n内存扫描出现意外错误!已跳过扫描!\n返回数值: " << Misc->DecimalToHex(pak_file_addr, true) << "\n";
         }
         else
         {
             cout << "\n因缺少内存扫描必要文件,已跳过扫描!\n不进行内存扫描可能会导致游戏出现问题!\n缺少文件: " << memfile_missing_list << "\n";
         }
 
-        int muted = 0;
         if (resource_addr != NULL)
         {
             for (int i = 0; i < 2048; i++)
@@ -150,142 +160,7 @@ void main(int argc, const char* argv[])
             }
         }
 
-        if (Arg->Exist("-newblockmethod"))
-        {
-            // resume the main thread because we need to debug now
-            ResumeThread(handle_t);
-            CloseHandle(handle_t);
-
-            cout << "开始监控游戏文件读取状态...\n请勿关闭汉化程序! 否则游戏将崩溃!!!\n按住Del键可在游戏加载文件时终止监控\n\n";
-
-            // set priority of both to improve performance
-            DWORD gamepri = GetPriorityClass(mem->m_hProcess);
-            SetPriorityClass(GetCurrentProcess(), ((thread::hardware_concurrency() >= 4) ? REALTIME_PRIORITY_CLASS : HIGH_PRIORITY_CLASS));
-            SetPriorityClass(mem->m_hProcess, HIGH_PRIORITY_CLASS);
-
-            debug: DebugActiveProcess(mem->m_dwProcessId);
-            DebugSetProcessKillOnExit(false);
-
-            HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, FALSE, mem->GetThreadById(mem->m_dwProcessId));
-
-            // todo: add utf8 asm to the new block method and disable memory scan of resource if user are using new one
-
-            // compilation, asm context:
-            // UTF-8: mov dl,[esi+eax]
-            // UTF-16: movzx esi,word ptr [eax]
-            //DWORD filesystem_asm_utf8_addr = filesystem->GetImage() + find_ptr(filesystem, "8A 14 06 8A 18 3A D3 75 08 41 40 3B CF 72 F1", 0, 0, true, false);
-            DWORD filesystem_asm_utf16_addr = filesystem->GetImage() + find_ptr(filesystem, "? ? 14 07 ? ? 30 66 3B D6 75 0E 83 C0 02 83 E9 01 75 EC", 0, 0, true, false);
-            /*
-            CONTEXT ctx_utf8;
-            ctx_utf8.ContextFlags = CONTEXT_DEBUG_REGISTERS;
-            GetThreadContext(hThread, &ctx_utf8);
-            ctx_utf8.Dr0 = filesystem_asm_utf8_addr;
-            ctx_utf8.Dr7 = 1;
-            SetThreadContext(hThread, &ctx_utf8);
-            */
-            CONTEXT ctx_utf16;
-            ctx_utf16.ContextFlags = CONTEXT_DEBUG_REGISTERS;
-            GetThreadContext(hThread, &ctx_utf16);
-            ctx_utf16.Dr0 = filesystem_asm_utf16_addr;
-            ctx_utf16.Dr7 = 1;
-            SetThreadContext(hThread, &ctx_utf16);
-
-            DEBUG_EVENT dbgEvent;
-            DWORD dbgFlag = DBG_CONTINUE;
-            bool loop = true;
-            while (loop)
-            {
-                if (!WaitForDebugEvent(&dbgEvent, INFINITE))
-                {
-                    cout << "调试器出现意外错误!已跳过监控!\n返回数值: " << Misc->DecimalToHex(GetLastError(), true) << "\n";
-                    break;
-                }
-
-                dbgFlag = DBG_CONTINUE;
-                if (dbgEvent.dwDebugEventCode == EXCEPTION_DEBUG_EVENT && dbgEvent.u.Exception.ExceptionRecord.ExceptionCode == EXCEPTION_ACCESS_VIOLATION)
-                {
-                    // this error occur after new dll module has been loaded and game trying to read it but our debugger didn't know about new module
-                    // a refresh is needed or process will hanging forever
-                    CloseHandle(hThread);
-                    DebugActiveProcessStop(mem->m_dwProcessId);
-                    goto debug;
-                }
-
-                if (dbgEvent.dwDebugEventCode == EXCEPTION_DEBUG_EVENT && dbgEvent.u.Exception.ExceptionRecord.ExceptionCode == EXCEPTION_SINGLE_STEP)
-                {
-                    if (dbgEvent.u.Exception.ExceptionRecord.ExceptionAddress == (LPVOID)filesystem_asm_utf16_addr)
-                    {
-                        CONTEXT ctx1;
-                        ctx1.ContextFlags = CONTEXT_FULL;
-                        GetThreadContext(hThread, &ctx1);
-                        ctx1.EFlags |= 0x10000;
-                        SetThreadContext(hThread, &ctx1);
-
-                        if (ctx1.Eax < 0x100)
-                        {
-                            ContinueDebugEvent(dbgEvent.dwProcessId, dbgEvent.dwThreadId, dbgFlag);
-                            continue;
-                        }
-
-                        wstring tempws(mem->Read<bigstr>(ctx1.Eax).text);
-                        // not safe, will lost data if any word is a non-ascii character
-                        // find a better way to do this!
-                        string filename(tempws.begin(), tempws.end());
-                        if (filename.find("trike/") == -1)
-                            continue;
-
-                        if (filename == "lstrike/locale_chn/resource/item.csv" ||
-                            filename == "lstrike/locale_chn/resource/bad_words.csv" ||
-                            filename == "lstrike/locale_chn/resource/relation_product_ver2.csv" ||
-                            filename == "lstrike/locale_chn/resource/res/popup_login.res" ||
-                            false /* change the list here! */)
-                        {
-                            muted++;
-                            mem->Write(ctx1.Eax, L"null");
-                        }
-
-                        if (filename == "lstrike/common/resource/quest/medalclosed_l.tga")
-                        {
-                            // restore the original function
-                            GetThreadContext(hThread, &ctx_utf16);
-                            ctx_utf16.Dr0 = 0;
-                            ctx_utf16.Dr7 = 0x400;
-                            SetThreadContext(hThread, &ctx_utf16);
-                            loop = false;
-                            cout << "游戏已加载完毕, 终止监控...\n";
-                        }
-                        
-                        //Misc->SetConsoleSize(900, 380);
-                        //cout << filename << "   \t\r" << flush;
-                    }
-                    else
-                    {
-                        dbgFlag = DBG_EXCEPTION_NOT_HANDLED;
-                    }
-                }
-                else
-                {
-                    dbgFlag = DBG_EXCEPTION_NOT_HANDLED;
-                }
-
-                if (GetAsyncKeyState(VK_DELETE) & 0x8000)
-                {
-                    // restore the original function
-                    GetThreadContext(hThread, &ctx_utf16);
-                    ctx_utf16.Dr0 = 0;
-                    ctx_utf16.Dr7 = 0x400;
-                    SetThreadContext(hThread, &ctx_utf16);
-                    loop = false;
-                    cout << "已手动按住Del终止监控...\n";
-                }
-
-                ContinueDebugEvent(dbgEvent.dwProcessId, dbgEvent.dwThreadId, dbgFlag);
-            }
-            SetPriorityClass(mem->m_hProcess, gamepri);
-            DebugActiveProcessStop(mem->m_dwProcessId);
-            CloseHandle(hThread);
-        }
-        else
+        if (pakexist)
         {
             DWORD addresses[CHAR_MAX];
             for (int i = 0; i < CHAR_MAX; i++)
@@ -332,11 +207,11 @@ void main(int argc, const char* argv[])
                 if (i == 0)
                     muted++;
             }
-
-            // resume the main thread because everything is done
-            ResumeThread(handle_t);
-            CloseHandle(handle_t);
         }
+
+        // resume the main thread because everything is done
+        ResumeThread(handle_thread);
+        CloseHandle(handle_thread);
 
         cout << "已阻止 " << muted << " 个不应该被加载的文件.\n\n";
     }
