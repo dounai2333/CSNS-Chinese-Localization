@@ -287,7 +287,6 @@ void main(int argc, const char* argv[])
         }
         else
         {
-            // 经 典 复 刻
             DWORD addresses[CHAR_MAX];
             for (int i = 0; i < CHAR_MAX; i++)
                 addresses[i] = NULL;
@@ -313,23 +312,23 @@ void main(int argc, const char* argv[])
             }
             for (int i = 0; i < CHAR_MAX; i++)
                 addresses[i] = NULL;
-            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/relation_product_ver2.csv", addresses, "utf-16");
-            for (int i = 0; i < CHAR_MAX; i++)
-            {
-                if (addresses[i] == NULL)
-                    break;
-                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/relation_product_ver2.csv", 0x78, true);
-                if (i == 0)
-                    muted++;
-            }
-            for (int i = 0; i < CHAR_MAX; i++)
-                addresses[i] = NULL;
             RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/res/popup_login.res", addresses, "utf-16");
             for (int i = 0; i < CHAR_MAX; i++)
             {
                 if (addresses[i] == NULL)
                     break;
                 PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/res/popup_login.res", 0x68, true);
+                if (i == 0)
+                    muted++;
+            }
+            for (int i = 0; i < CHAR_MAX; i++)
+                addresses[i] = NULL;
+            RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/relation_product_ver2.csv", addresses, "utf-16");
+            for (int i = 0; i < CHAR_MAX; i++)
+            {
+                if (addresses[i] == NULL)
+                    break;
+                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/relation_product_ver2.csv", 0x78, true);
                 if (i == 0)
                     muted++;
             }
@@ -348,28 +347,41 @@ void main(int argc, const char* argv[])
 
 void PackerMuteMultiFile(DWORD address, string file, DWORD index, bool safeblock)
 {
-    DWORD addr = address - index * mem->Read<byte>(address - 3);
+    bool needbreak = false;
+    DWORD startaddr = address - (index * mem->Read<byte>(address - 2) * (0xFF + 1) + index * mem->Read<byte>(address - 3));
+
     for (int i = 0; i < 0xFF; i++)
     {
-        wstring tempws(mem->Read<bigstr>(addr + index * i).text);
-        // not safe, will lost data if any word is a non-ascii character
-        // find a better way to do this!
-        string filename(tempws.begin(), tempws.end());
-        if (filename.find("lstrike") == -1)
-            continue; // we don't break because some info is encrypted and it will cause problem
-
-        if (filename == file)
+        if (needbreak)
+            break;
+        for (int j = 0; j < 0xFF; j++)
         {
-            if (!safeblock)
+            DWORD addr = startaddr + (index * i * (0xFF + 1) + index * j);
+            if (mem->Read<byte>(addr - 2) != i || mem->Read<byte>(addr - 3) != j)
             {
-                mem->Write(addr + index * i, L"null");
+                needbreak = true;
+                break;
             }
             else
             {
-                // safe block: upper the first character, simple and working
-                string temp;
-                temp += filename[0];
-                mem->Write<byte>(addr + index * i, Misc->ToUpper(temp)[0]);
+                wstring tempws(mem->Read<bigstr>(addr).text);
+                // not safe, will lost data if any word is a non-ascii character
+                // find a better way to do this!
+                string filename(tempws.begin(), tempws.end());
+                if (filename == file)
+                {
+                    if (!safeblock)
+                    {
+                        mem->Write(addr, L"null");
+                    }
+                    else
+                    {
+                        // safe block: upper the first character, simple and working
+                        string temp;
+                        temp += filename[0];
+                        mem->Write<byte>(addr, Misc->ToUpper(temp)[0]);
+                    }
+                }
             }
         }
     }
