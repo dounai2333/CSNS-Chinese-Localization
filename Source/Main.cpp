@@ -19,8 +19,8 @@ void main(int argc, const char* argv[])
              << "- 如字体变宋体或异常请安装华康圆体W9\n"
              << "- 不保证绝对不会出现程序BUG\n"
              << "- 不保证游戏数次更新后仍可用\n\n"
-             <<"Made by dounai2333 (QQ1328600509)\n"
-             <<"二次开发: github.com/dounai2333\n\n";
+             << "Made by dounai2333 (QQ1328600509)\n"
+             << "二次开发: github.com/dounai2333\n\n";
         Exit(1);
     }
 
@@ -69,7 +69,7 @@ void main(int argc, const char* argv[])
     else if (cstrike_na_en_addr_text != "/cstrike_na_en/" || lstrike_na_en_addr_text != "/lstrike/locale_na_en/" || lang_addr_text != "na_en")
     {
         Misc->ConsoleClear();
-        cout << "检测到非法内容,可能由于游戏更新基址已过期\n\n如果您的游戏语言不是英语,\n请修改为英语后重试!\n";
+        cout << "检测到非法内容,可能由于游戏更新基址已过期\n\n如果您的游戏语言不是英语,\n请修改为英语后重试!\n二次开发: github.com/dounai2333\n";
         Exit(1);
     }
 
