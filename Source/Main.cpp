@@ -162,11 +162,11 @@ void main(int argc, const char* argv[])
 
         if (pakexist)
         {
-            DWORD addresses[CHAR_MAX];
-            for (int i = 0; i < CHAR_MAX; i++)
+            DWORD addresses[128];
+            for (int i = 0; i < 128; i++)
                 addresses[i] = NULL;
             RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/item.csv", addresses, "utf-16");
-            for (int i = 0; i < CHAR_MAX; i++)
+            for (int i = 0; i < 128; i++)
             {
                 if (addresses[i] == NULL)
                     break;
@@ -174,10 +174,10 @@ void main(int argc, const char* argv[])
                 if (i == 0)
                     muted++;
             }
-            for (int i = 0; i < CHAR_MAX; i++)
+            for (int i = 0; i < 128; i++)
                 addresses[i] = NULL;
             RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/bad_words.csv", addresses, "utf-16");
-            for (int i = 0; i < CHAR_MAX; i++)
+            for (int i = 0; i < 128; i++)
             {
                 if (addresses[i] == NULL)
                     break;
@@ -185,10 +185,10 @@ void main(int argc, const char* argv[])
                 if (i == 0)
                     muted++;
             }
-            for (int i = 0; i < CHAR_MAX; i++)
+            for (int i = 0; i < 128; i++)
                 addresses[i] = NULL;
             RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/res/popup_login.res", addresses, "utf-16");
-            for (int i = 0; i < CHAR_MAX; i++)
+            for (int i = 0; i < 128; i++)
             {
                 if (addresses[i] == NULL)
                     break;
@@ -196,10 +196,10 @@ void main(int argc, const char* argv[])
                 if (i == 0)
                     muted++;
             }
-            for (int i = 0; i < CHAR_MAX; i++)
+            for (int i = 0; i < 128; i++)
                 addresses[i] = NULL;
             RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/relation_product_ver2.csv", addresses, "utf-16");
-            for (int i = 0; i < CHAR_MAX; i++)
+            for (int i = 0; i < 128; i++)
             {
                 if (addresses[i] == NULL)
                     break;
@@ -303,7 +303,7 @@ DWORD RunMemScanAndGetExitCode(DWORD ProcessID, string Type, string Value, strin
     return NULL;
 }
 
-void RunMemScanAndGetAllAddress(DWORD ProcessID, string Type, string Value, DWORD(&output)[CHAR_MAX], string Encoding)
+void RunMemScanAndGetAllAddress(DWORD ProcessID, string Type, string Value, DWORD(&output)[128], string Encoding)
 {
     string strtemp = "MemScan.exe -pid=" + to_string(ProcessID) + " -t=" + Type + " -value=\"" + Value + "\" " + ((Type == "s") ? ("-encoding=" + Encoding) : "") + " >%temp%\\address.log";
     system(strtemp.c_str());

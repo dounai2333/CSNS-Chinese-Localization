@@ -19,7 +19,7 @@ bool ArgParser::Open(int argc, const char** argv)
 void ArgParser::Clear()
 {
 	Arg->count = NULL;
-	for (int i = 0; i < CHAR_MAX; i++)
+	for (int i = 0; i < 128; i++)
 		args[i] = "";
 }
 
