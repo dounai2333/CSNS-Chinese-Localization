@@ -28,9 +28,9 @@ A localization program that can let CSN:S load the Chinese.
 
 ### Available arguments
 
-- -dontblock : Don't try to block any file, let game load them normally.
+- -killac : Kill anti-cheat process to speed up loading time a little. (useful if your NGS stuck multi times)
 
-- -newblockmethod : Use new block method, prevent random crash **but have a lot performance issues**.
+- -dontblock : Don't try to block any file, let game load them normally.
 
 - -autoexit : Automatically exit the program after everything is done, will wait 5 seconds before exiting.
 
