@@ -174,6 +174,7 @@ void main(int argc, const char* argv[])
                 if (i == 0)
                     muted++;
             }
+            /*
             for (int i = 0; i < 128; i++)
                 addresses[i] = NULL;
             RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/bad_words.csv", addresses, "utf-16");
@@ -185,6 +186,7 @@ void main(int argc, const char* argv[])
                 if (i == 0)
                     muted++;
             }
+            */
             for (int i = 0; i < 128; i++)
                 addresses[i] = NULL;
             RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/res/popup_login.res", addresses, "utf-16");
@@ -196,6 +198,7 @@ void main(int argc, const char* argv[])
                 if (i == 0)
                     muted++;
             }
+            /*
             for (int i = 0; i < 128; i++)
                 addresses[i] = NULL;
             RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/relation_product_ver2.csv", addresses, "utf-16");
@@ -207,6 +210,7 @@ void main(int argc, const char* argv[])
                 if (i == 0)
                     muted++;
             }
+            */
         }
 
         // resume the main thread because everything is done
