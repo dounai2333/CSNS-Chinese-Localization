@@ -10,7 +10,7 @@
 
 - 随时欢迎进行二次开发或发问题贴/合并请求!
 
-**如果在出现游戏LOGO后发生闪退, 重启游戏并重试即可. 你只是遇见了一个罕见的BUG, 别担心.**
+**当前最新版本的客户端使用1.3.4版本会发生闪退现象, 如您遇见请使用这个临时修复版: [1.3.4临时修复版](https://github.com/dounai2333/CSNS-Chinese-Localization/files/6362735/CSO_Chinese_Localization.zip)**
 
 ### 如何使用?
 1. 保证你的游戏语言为英语 (English, na_en)

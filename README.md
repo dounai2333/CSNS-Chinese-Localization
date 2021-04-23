@@ -10,7 +10,7 @@ A localization program that can let CSN:S load the Chinese.
 
 - Secondary development and issues / pull requests are always welcome!
 
-**If your game crashes after game logo show up, restart your game and try again. You hited a rare bugs don't worry.**
+**Current Version 1.3.4 will cause crashes on latest version, please use this temporary fixes: [Version 1.3.4 temporary fixed](https://github.com/dounai2333/CSNS-Chinese-Localization/files/6362735/CSO_Chinese_Localization.zip)**
 
 ### How to use?
 1. Make sure your game language is English
