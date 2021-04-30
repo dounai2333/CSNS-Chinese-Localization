@@ -1,7 +1,7 @@
 ## Counter-Strike Online (Nexon: Studio / Zombies) Chinese Localization
 
 [![](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
-[![](https://img.shields.io/badge/Release%20Version-1.3.4-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3.4)
+[![](https://img.shields.io/badge/Release%20Version-1.3.4%20fixed-green)](https://github.com/dounai2333/CSNS-Chinese-Localization/releases/tag/1.3.4)
 [Chinese Readme | 中文说明文档](./README_CN.md)
 
 A localization program that can let CSN:S load the Chinese.
@@ -9,8 +9,6 @@ A localization program that can let CSN:S load the Chinese.
 **This project is current under [MIT license](./LICENSE) and written in C++, build with VS2019.**
 
 - Secondary development and issues / pull requests are always welcome!
-
-**Current Version 1.3.4 will cause crashes on latest version, please use this temporary fixes: [Version 1.3.4 temporary fixed](https://github.com/dounai2333/CSNS-Chinese-Localization/files/6362735/CSO_Chinese_Localization.zip)**
 
 ### How to use?
 1. Make sure your game language is English
