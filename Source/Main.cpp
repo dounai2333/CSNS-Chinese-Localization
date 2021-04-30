@@ -174,7 +174,7 @@ void main(int argc, const char* argv[])
                 if (i == 0)
                     muted++;
             }
-            /*
+            /* // due to whatever changes this value will always cause crash, disabled.
             for (int i = 0; i < 128; i++)
                 addresses[i] = NULL;
             RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/bad_words.csv", addresses, "utf-16");
