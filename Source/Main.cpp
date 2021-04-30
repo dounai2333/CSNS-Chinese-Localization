@@ -170,7 +170,7 @@ void main(int argc, const char* argv[])
             {
                 if (addresses[i] == NULL)
                     break;
-                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/item.csv", 0x58, true);
+                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/item.csv", 0x58, 1);
                 if (i == 0)
                     muted++;
             }
@@ -182,7 +182,7 @@ void main(int argc, const char* argv[])
             {
                 if (addresses[i] == NULL)
                     break;
-                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/bad_words.csv", 0x68, true);
+                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/bad_words.csv", 0x68, 2);
                 if (i == 0)
                     muted++;
             }
@@ -194,11 +194,10 @@ void main(int argc, const char* argv[])
             {
                 if (addresses[i] == NULL)
                     break;
-                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/res/popup_login.res", 0x68, true);
+                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/res/popup_login.res", 0x68, 1);
                 if (i == 0)
                     muted++;
             }
-            /*
             for (int i = 0; i < 128; i++)
                 addresses[i] = NULL;
             RunMemScanAndGetAllAddress(mem->m_dwProcessId, "s", "lstrike/locale_chn/resource/relation_product_ver2.csv", addresses, "utf-16");
@@ -206,11 +205,10 @@ void main(int argc, const char* argv[])
             {
                 if (addresses[i] == NULL)
                     break;
-                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/relation_product_ver2.csv", 0x78, true);
+                PackerMuteMultiFile(addresses[i], "lstrike/locale_chn/resource/relation_product_ver2.csv", 0x78, 2);
                 if (i == 0)
                     muted++;
             }
-            */
         }
 
         // resume the main thread because everything is done
@@ -224,7 +222,7 @@ void main(int argc, const char* argv[])
     Exit(0);
 }
 
-void PackerMuteMultiFile(DWORD address, string file, DWORD index, bool safeblock)
+void PackerMuteMultiFile(DWORD address, string file, DWORD index, int blocktype)
 {
     bool needbreak = false;
     DWORD startaddr = address - (index * mem->Read<byte>(address - 2) * (0xFF + 1) + index * mem->Read<byte>(address - 3));
@@ -249,16 +247,19 @@ void PackerMuteMultiFile(DWORD address, string file, DWORD index, bool safeblock
                 string filename(tempws.begin(), tempws.end());
                 if (filename == file)
                 {
-                    if (!safeblock)
+                    if (blocktype == 2) // fake folder
                     {
-                        mem->Write(addr, L"null");
+                        mem->Write(addr, L"lstrike/locale_chn/resource/item.csv");
                     }
-                    else
+                    else if (blocktype == 1) // upper first character
                     {
-                        // safe block: upper the first character, simple and working
                         string temp;
                         temp += filename[0];
                         mem->Write<byte>(addr, Misc->ToUpper(temp)[0]);
+                    }
+                    else // FU*K IT!
+                    {
+                        mem->Write(addr, L"null");
                     }
                 }
             }
