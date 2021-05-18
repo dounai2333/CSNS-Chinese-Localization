@@ -33,9 +33,9 @@ A localization program that can let CSN:S load the Chinese.
 - -autoexit : Automatically exit the program after everything is done, will wait 5 seconds before exiting.
 
 ### Will I be banned for using this on Steam server?
-Will, most likely **YES**.
+Well, most likely **YES**.
 
-Thats because this program is working like other normal cheating software (memory reading / writing)
+That's because this program is working like other normal cheating software (memory reading / writing)
 
 USE AT YOUR OWN RISK!
 
