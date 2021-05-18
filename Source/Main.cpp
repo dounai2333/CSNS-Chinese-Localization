@@ -1,6 +1,6 @@
 ﻿#include "Main.h"
 
-void main(int argc, const char* argv[])
+int main(int argc, const char* argv[])
 {
     SetConsoleTitle("CSN:S汉化程序");
     Misc->DisableConsoleQuickEdit();
@@ -220,6 +220,8 @@ void main(int argc, const char* argv[])
 
     cout << "操作执行完毕,已加载汉化! :)\nMade by dounai2333(QQ1328600509)\n\n";
     Exit(0);
+
+    return 0; // program will never call this, it's just for prevent warning
 }
 
 void PackerMuteMultiFile(DWORD address, string file, DWORD index, int blocktype)
