@@ -218,7 +218,8 @@ int main(int argc, const char* argv[])
         cout << "已阻止 " << muted << " 个不应该被加载的文件.\n\n";
     }
 
-    cout << "操作执行完毕,已加载汉化! :)\nMade by dounai2333(QQ1328600509)\n\n";
+    cout << "操作执行完毕,已加载汉化! :)\nMade by dounai2333(QQ1328600509)\n";
+    cout << "当前程序版本: 1.3.4修复版\n获取更新: github.com/dounai2333\n\n";
     Exit(0);
 
     return 0; // program will never call this, it's just for prevent warning
