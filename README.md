@@ -10,6 +10,15 @@ A localization program that can let CSN:S load the Chinese.
 
 - Secondary development and issues / pull requests are always welcome!
 
+### One thing you have to know:
+This project is **no long support Season 9 updates and any update after that** (20 May 2021 and any after).
+
+Nexon have updated their code to protect file path, there is not much I can do.
+
+If you wanna try to decrypt, go for it: "f6a4e6657cb9a5b0dbaf78e0e8b7850e -> fixtrike/csnz.ico"
+
+That's all. Don't start new issue to report this bugs unless you know how to decrypt it.
+
 ### How to use?
 1. Make sure your game language is English
 2. Get cstrike_chn.nar from CSO China client

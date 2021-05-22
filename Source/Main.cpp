@@ -46,12 +46,12 @@ int main(int argc, const char* argv[])
     // if filesysyem_nar.dll get any update then we need to check this
     // don't remove + 0x30 or any file in nar will override same file come from pak
     // address - 0x30 = /fixtrike/
-    DWORD cstrike_na_en_addr = mem->Read<DWORD>(filesystem->GetImage() + 0xCC6E4) + 0x30;
+    DWORD cstrike_na_en_addr = mem->Read<DWORD>(filesystem->GetImage() + 0xCD6E4) + 0x30;
     // string, original content: /lstrike/locale_na_en/ (if user's game language isn't English, na_en will be others like na_ru etc...)
     // if filesystem_nar.dll get any update then we need to check this
     // address + 0x30(= +0x48) = /lstrike/locale_na/ , + 0x60(= +0x78) = /lstrike/common/
     // note: the Packer (.pak) files will load from "lstrike"
-    DWORD lstrike_na_en_addr = mem->Read<DWORD>(mem->Read<DWORD>(filesystem->GetImage() + 0xCC6E4) + 0x18);
+    DWORD lstrike_na_en_addr = mem->Read<DWORD>(mem->Read<DWORD>(filesystem->GetImage() + 0xCD6E4) + 0x18);
     // string, original content: na_en (it's protected so we can not scan it with "writable")
     // this signature is little dangers, may it will not working anymore if has any update
     DWORD lang_addr = hw->GetImage() + find_ptr(hw, "C7 00 ? ? ? ? C7 40 04 ? ? ? ? E8 ? ? ? ? 83 C4 10 6A 00 56 57 83 EC 08 8B C4", 0x2, 0x3C);
@@ -98,22 +98,22 @@ int main(int argc, const char* argv[])
             if ((string)mem->Read<str>(resource_base_addr).text == "/cstrike_chn/resource/background/800_2_d_advice.tga")
                 resource_addr = resource_base_addr;
             else if (resource_base_addr == 2)
-                cout << "\nnar文件缺失!\n其应被放置在Data内且不得改名!\n\n如果您正在尝试读取非国服的文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
+                cout << "nar文件缺失!\n其应被放置在Data内且不得改名!\n\n如果您正在尝试读取非国服的文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
             else
-                cout << "\n内存扫描出现意外错误!已跳过扫描!\n返回数值: " << Misc->DecimalToHex(resource_base_addr, true) << "\n";
+                cout << "内存扫描出现意外错误!已跳过扫描!\n返回数值: " << Misc->DecimalToHex(resource_base_addr, true) << "\n";
             DWORD pak_file_addr = RunMemScanAndGetExitCode(mem->m_dwProcessId, "s", "./\\../Data/Packer/chn_00000.pak", "utf-16");
             wstring wstemp = mem->Read<bigstr>(pak_file_addr).text;
             string pak_string(wstemp.begin(), wstemp.end());
             if (pak_string == "./\\../Data/Packer/chn_00000.pak")
                 pakexist = true;
             else if (pak_file_addr == 2)
-                cout << "\npak文件缺失!\n其应被放置在Data/Packer内且不得改名!\n\n如果您正在尝试读取非国服的文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
+                cout << "pak文件缺失!\n其应被放置在Data/Packer内且不得改名!\n\n如果您正在尝试读取非国服的文件,\n那么您应该对此程序进行二次开发:\ngithub.com/dounai2333\n";
             else
-                cout << "\n内存扫描出现意外错误!已跳过扫描!\n返回数值: " << Misc->DecimalToHex(pak_file_addr, true) << "\n";
+                cout << "内存扫描出现意外错误!已跳过扫描!\n返回数值: " << Misc->DecimalToHex(pak_file_addr, true) << "\n";
         }
         else
         {
-            cout << "\n因缺少内存扫描必要文件,已跳过扫描!\n不进行内存扫描可能会导致游戏出现问题!\n缺少文件: " << memfile_missing_list << "\n";
+            cout << "因缺少内存扫描必要文件,已跳过扫描!\n不进行内存扫描可能会导致游戏出现问题!\n缺少文件: " << memfile_missing_list << "\n";
         }
 
         if (resource_addr != NULL)
