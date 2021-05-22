@@ -13,11 +13,13 @@ A localization program that can let CSN:S load the Chinese.
 ### One thing you have to know:
 This project is **no long support Season 9 updates and any update after that** (20 May 2021 and any after).
 
-Nexon have updated their code to protect file path, there is not much I can do.
+Nexon have enabled encryption to protect file path, there is not much I can do.
 
 If you wanna try to decrypt, go for it: "f6a4e6657cb9a5b0dbaf78e0e8b7850e -> fixtrike/csnz.ico"
 
-That's all. Don't start new issue to report this bugs unless you know how to decrypt it.
+That's all.
+
+If you got a way to decrypt it, feel free to [new issue thread here](https://github.com/dounai2333/CSNS-Chinese-Localization/issues/new) and tell me.
 
 ### How to use?
 1. Make sure your game language is English
