@@ -46,12 +46,12 @@ int main(int argc, const char* argv[])
     // if filesysyem_nar.dll get any update then we need to check this
     // don't remove + 0x30 or any file in nar will override same file come from pak
     // address - 0x30 = /fixtrike/
-    DWORD cstrike_na_en_addr = mem->Read<DWORD>(filesystem->GetImage() + 0xCD6E4) + 0x30;
+    DWORD cstrike_na_en_addr = mem->Read<DWORD>(filesystem->GetImage() + 0xCC6E4) + 0x30; // Season 9 updates: 0xCD6E4
     // string, original content: /lstrike/locale_na_en/ (if user's game language isn't English, na_en will be others like na_ru etc...)
     // if filesystem_nar.dll get any update then we need to check this
     // address + 0x30(= +0x48) = /lstrike/locale_na/ , + 0x60(= +0x78) = /lstrike/common/
     // note: the Packer (.pak) files will load from "lstrike"
-    DWORD lstrike_na_en_addr = mem->Read<DWORD>(mem->Read<DWORD>(filesystem->GetImage() + 0xCD6E4) + 0x18);
+    DWORD lstrike_na_en_addr = mem->Read<DWORD>(mem->Read<DWORD>(filesystem->GetImage() + 0xCC6E4) + 0x18); // Season 9 updates: 0xCD6E4
     // string, original content: na_en (it's protected so we can not scan it with "writable")
     // this signature is little dangers, may it will not working anymore if has any update
     DWORD lang_addr = hw->GetImage() + find_ptr(hw, "C7 00 ? ? ? ? C7 40 04 ? ? ? ? E8 ? ? ? ? 83 C4 10 6A 00 56 57 83 EC 08 8B C4", 0x2, 0x3C);
