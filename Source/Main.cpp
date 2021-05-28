@@ -20,7 +20,7 @@ int main(int argc, const char* argv[])
              << "- 不保证绝对不会出现程序BUG\n"
              << "- 不保证游戏数次更新后仍可用\n\n"
              << "Made by dounai2333 (QQ1328600509)\n"
-             << "二次开发: github.com/dounai2333\n\n";
+             << "当前程序版本: 1.3.4修复版\n二次开发: github.com/dounai2333\n";
         Exit(1);
     }
 

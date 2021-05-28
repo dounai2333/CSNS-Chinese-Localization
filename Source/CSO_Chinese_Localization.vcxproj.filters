@@ -14,10 +14,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
-    <ClInclude Include="Memory\module.h">
+    <ClInclude Include="Memory\mem.h">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Memory\mem.h">
+    <ClInclude Include="Memory\module.h">
       <Filter>Memory</Filter>
     </ClInclude>
     <ClInclude Include="Misc\Misc.h">
@@ -26,17 +26,6 @@
     <ClInclude Include="Misc\ArgParser.h">
       <Filter>Misc</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Memory">
-      <UniqueIdentifier>{77ba3de4-9a60-4e15-933d-5f952c1e73e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Misc">
-      <UniqueIdentifier>{89091e1c-c0ee-453c-95bb-34f3eee661ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Memory Scan">
-      <UniqueIdentifier>{155ef404-7960-4763-ab22-1efe3e4d5de7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="Memory Scan\clrcompression.dll">
@@ -48,11 +37,22 @@
     <CopyFileToFolders Include="Memory Scan\coreclr.dll">
       <Filter>Memory Scan</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="Memory Scan\MemScan.exe">
-      <Filter>Memory Scan</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="Memory Scan\mscordaccore.dll">
       <Filter>Memory Scan</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="Memory Scan\MemScan.exe">
+      <Filter>Memory Scan</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Memory Scan">
+      <UniqueIdentifier>{7c06c906-5028-4554-8789-a5d33aa8f86c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{ae7191bc-89f4-407e-93e8-9d7603747c03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Misc">
+      <UniqueIdentifier>{65801d5b-7065-4f04-aad2-a36eef25aa99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
