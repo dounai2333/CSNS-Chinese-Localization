@@ -30,8 +30,8 @@
 #include <chrono>
 #include <shlobj.h>
 
-#include "Misc\Misc.h"
-#include "Misc\ArgParser.h"
+#include "Miscs\Miscs.h"
+#include "Miscs\ArgParser.h"
 
 #include "Memory\module.h"
 #include "Memory\mem.h"

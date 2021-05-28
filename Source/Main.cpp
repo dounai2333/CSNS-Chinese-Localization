@@ -1,5 +1,10 @@
 ﻿#include "Main.h"
 
+string VersionText()
+{
+    return "当前程序版本: 1.3.4修复版";
+}
+
 int main(int argc, const char* argv[])
 {
     SetConsoleTitle("CSN:S汉化程序");
@@ -20,7 +25,8 @@ int main(int argc, const char* argv[])
              << "- 不保证绝对不会出现程序BUG\n"
              << "- 不保证游戏数次更新后仍可用\n\n"
              << "Made by dounai2333 (QQ1328600509)\n"
-             << "当前程序版本: 1.3.4修复版\n二次开发: github.com/dounai2333\n";
+             << VersionText() <<"\n"
+             << "二次开发: github.com/dounai2333\n\n";
         Exit(1);
     }
 
@@ -219,7 +225,7 @@ int main(int argc, const char* argv[])
     }
 
     cout << "操作执行完毕,已加载汉化! :)\nMade by dounai2333(QQ1328600509)\n";
-    cout << "当前程序版本: 1.3.4修复版\n获取更新: github.com/dounai2333\n\n";
+    cout << VersionText() << "\n获取更新: github.com/dounai2333\n\n";
     Exit(0);
 
     return 0; // program will never call this, it's just for prevent warning

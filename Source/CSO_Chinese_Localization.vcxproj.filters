@@ -5,11 +5,11 @@
     <ClCompile Include="Memory\mem.cpp">
       <Filter>Memory</Filter>
     </ClCompile>
-    <ClCompile Include="Misc\Misc.cpp">
-      <Filter>Misc</Filter>
+    <ClCompile Include="Miscs\Miscs.cpp">
+      <Filter>Miscs</Filter>
     </ClCompile>
-    <ClCompile Include="Misc\ArgParser.cpp">
-      <Filter>Misc</Filter>
+    <ClCompile Include="Miscs\ArgParser.cpp">
+      <Filter>Miscs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -20,11 +20,11 @@
     <ClInclude Include="Memory\module.h">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Misc\Misc.h">
-      <Filter>Misc</Filter>
+    <ClInclude Include="Miscs\Miscs.h">
+      <Filter>Miscs</Filter>
     </ClInclude>
-    <ClInclude Include="Misc\ArgParser.h">
-      <Filter>Misc</Filter>
+    <ClInclude Include="Miscs\ArgParser.h">
+      <Filter>Miscs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -51,7 +51,7 @@
     <Filter Include="Memory">
       <UniqueIdentifier>{ae7191bc-89f4-407e-93e8-9d7603747c03}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Misc">
+    <Filter Include="Miscs">
       <UniqueIdentifier>{65801d5b-7065-4f04-aad2-a36eef25aa99}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
