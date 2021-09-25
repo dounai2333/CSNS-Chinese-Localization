@@ -42,13 +42,6 @@
 
 使用风险自负!
 
-### 我的游戏在用了这个程序后出现问题! HELP!
-[点击这里](https://github.com/dounai2333/CSNS-Chinese-Localization/issues/new)发起一个新的问题帖.
-
-**请尽可能地提供更多信息!**
-
-**你提供的描述越多, 获得帮助的可能性也就越大!**
-
 ‮
 
 ‮
