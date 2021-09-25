@@ -10,16 +10,8 @@ A localization program that can let CSN:S load the Chinese.
 
 - Secondary development and issues / pull requests are always welcome!
 
-### One thing you have to know:
-This project is **no long support Season 9 updates and any update after that** (20 May 2021 and any after).
-
-Nexon have enabled encryption to protect file path, there is not much I can do.
-
-If you wanna try to decrypt, go for it: "f6a4e6657cb9a5b0dbaf78e0e8b7850e -> fixtrike/csnz.ico"
-
-That's all.
-
-If you got a way to decrypt it, feel free to [new issue thread here](https://github.com/dounai2333/CSNS-Chinese-Localization/issues/new) and tell me.
+### This project is now out of life.
+I'll not do support or maintain it anymore, you can still read the code or try to use it but don't complain if it's not working.
 
 ### How to use?
 1. Make sure your game language is English
@@ -49,11 +41,6 @@ Well, most likely **YES**.
 That's because this program is working like other normal cheating software (memory reading / writing)
 
 USE AT YOUR OWN RISK!
-
-### Is this program will stop working after game updates?
-I'm not sure, I have do it as much as possible to compatible with game update.
-
-But still, you can always download the source code, update the address and build for yourself!
 
 ### My game has problem with this program! help!
 Start a [new issue thread here](https://github.com/dounai2333/CSNS-Chinese-Localization/issues/new).
