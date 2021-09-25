@@ -42,13 +42,6 @@ That's because this program is working like other normal cheating software (memo
 
 USE AT YOUR OWN RISK!
 
-### My game has problem with this program! help!
-Start a [new issue thread here](https://github.com/dounai2333/CSNS-Chinese-Localization/issues/new).
-
-**Please give as much detail as possible!**
-
-**The more detail you gave, the more possibility helps!**
-
 ‮
 
 ‮
